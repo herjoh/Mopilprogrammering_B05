@@ -10,7 +10,7 @@
         "./assets/*"
       ]
     },
-    "types": [ "react"]
+    "types": ["jest", "react"]
   },
   "include": [
     "**/*.ts",
