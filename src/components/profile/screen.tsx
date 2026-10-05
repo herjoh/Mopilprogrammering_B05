@@ -1,30 +1,26 @@
 
 //Important start theme - can be changed
-import { useColorScheme } from 'react-native';
+import { useState } from 'react';
 
 //Profile functionality
-import { profile_enum } from '@/components/profile/Profile_Enum';
+//import { profile_enum } from '@/components/profile/Profile_Enum';
 
-export default function ProfileScreen(){
+const enum profile_enum {
+        Unauthenticated = 1,
+        Tenant ,
+        Landlord ,
+ }
 
-    const scheme = useColorScheme();
+const profileScreen = () => {
+    const [currentScreen, setCurrentScreen] = useState(profile_enum.Unauthenticated);
 
     //Main exportive function that allow the finsihed user to see their probile based on state enum
-    function profileState(state : profile_enum){
-        switch(state){
-            case profile_enum.Unauthenticated:
-                console.log("The user isnt autheticated");
-                break;
-            case profile_enum.Tenant:
-                console.log("The user is a tenant");
-                break;
-            case profile_enum.Landlord:
-                console.log("The user is a landlord");
-                break;
-            
-            default:
-                console.log("unregonised profier");
+  
+        switch(currentScreen){
+            case profile_enum.Tenant : return <p> The user is a tenant</p>
+            case profile_enum.Landlord : return <p>The profile is a landlord</p>
+            default: return console.log("Initialised")
         }
-
-    }
 }
+
+export default function ProfileScreen(){}; 
