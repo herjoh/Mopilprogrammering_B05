@@ -1,6 +1,38 @@
-import { createCase, getCase, getCases, resetDb, updateCase } from "../data/fakeDb";
+jest.mock("expo-file-system", () => {
+  let content: string | undefined;
+  class File {
+    get exists() {
+      return content !== undefined;
+    }
+    create() {
+      content = "";
+    }
+    write(text: string) {
+      content = text;
+    }
+    async text() {
+      return content ?? "";
+    }
+  }
+  return { File, Paths: { document: "mock://document" } };
+});
+
+import {
+  createCase,
+  getCase,
+  getCases,
+  getProperties,
+  getUsers,
+  resetDb,
+  updateCase,
+} from "../data/fakeDb";
 
 beforeEach(resetDb);
+
+test("getUsers og getProperties gir dummydata", async () => {
+  expect(await getUsers()).toHaveLength(2);
+  expect(await getProperties()).toHaveLength(1);
+});
 
 test("getCases gir alle sakene", async () => {
   expect(await getCases()).toHaveLength(3);
