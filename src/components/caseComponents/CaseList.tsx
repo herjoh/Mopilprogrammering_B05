@@ -1,5 +1,5 @@
 import { FlatList } from "react-native";
-import { CaseItem, CaseItemProps } from "./caseItem";
+import { CaseItem, CaseItemProps } from "./CaseItem";
 
 type Role = "tenant" | "landlord";
 

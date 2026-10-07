@@ -1,0 +1,1 @@
+// Tenkte å gjøre CaseRegister når vi har funnet ut av det jeg har gjort er riktig :)
