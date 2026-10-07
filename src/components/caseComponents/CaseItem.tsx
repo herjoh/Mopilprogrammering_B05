@@ -1,22 +1,22 @@
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-export type status = "open" | "in progress" | "pending" | "closed"; // definerer ulike status for saker
+export type CaseStatus = "open" | "in progress" | "pending" | "closed"; // definerer ulike status for saker
 export type CaseCategory = "water" | "electricity" | "heating" | "complaint" | "other"; // definerer ulike kategorier for saker, (kan endres)
-export type severity = "low" | "medium" | "high" | "urgent"; // definerer ulike alvorlighetsgrader for saker, (kan endres)
+export type CaseSeverity = "low" | "medium" | "high" | "urgent"; // definerer ulike alvorlighetsgrader for saker, (kan endres)
 
 export interface CaseItemProps { 
     id: string;
     title: string;
     description: string;
-    status: status;
+    status: CaseStatus;
     category: CaseCategory;
-    severity: severity;
+    severity: CaseSeverity;
     createdAt: string;
 }
 // CaseItemProps inneholder de tiltenkte propsene jeg tenkte en Case/CaseItem vil ha. // mulighet for endring
 export function CaseItem({...props}: CaseItemProps) { 
     return (
-        <View>
+        <View style={styles.CaseItemCard}>
             <Text>{props.title}</Text>
             <Text>{props.description}</Text>
             <Text>{props.status}</Text>
@@ -27,3 +27,12 @@ export function CaseItem({...props}: CaseItemProps) {
     )
 }
 // CaseItem er en default for hvordan en sak vil se ut, og hvilke props den vil ha. // mulighet for endring
+
+const styles = StyleSheet.create ({
+    CaseItemCard: {
+        padding: 12,
+        borderRadius: 10,
+        borderColor: "black",
+        borderWidth: 1,
+    }
+})
