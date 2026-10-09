@@ -1,5 +1,5 @@
 import type { CaseItemProps } from "@/components/caseComponents/CaseItem";
-
+// Bedt AI generere "fake data" slik at det som har blitt gjort kan visualiseres, da vi ikke har noe ekte data enda.
 export const caseItems: CaseItemProps[] = [
   {
     id: "1",

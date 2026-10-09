@@ -8,7 +8,7 @@
 
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { CaseCategory, CaseSeverity } from "./CaseItem";
 import { CaseItemProps } from "./CaseItem";
 
@@ -25,7 +25,7 @@ interface CaseRegisterProps {
 export function CaseRegister({onSubmit}: CaseRegisterProps) {
 
 // States med standardverdier
-
+// Å gjøre:  Lage et objekt for alle states.
 const [title, setTitle] = useState<string>(''); 
 const [description, setDescription] = useState<string>('');
 const [category, setCategory] = useState<CaseCategory>("complaint");
@@ -50,13 +50,13 @@ const handleSubmit = () => {
 
   return (
     <View>
-        <TextInput // Textinput er react-native sin type form
+        <TextInput style={styles.InputStyle} // Textinput er react-native sin type form
         value={title}
         placeholder="Ovnen funker ikke..."      
         onChangeText={setTitle}                       
         maxLength={30}                     
         />
-        <TextInput
+        <TextInput style={styles.InputStyle}
         value={description}
         placeholder="Ovnen funker ikke, og jeg har prøvd å skru den av og på igjen..."      
         onChangeText={setDescription}                       
@@ -91,3 +91,12 @@ const handleSubmit = () => {
     </View> //Tilslutt, onPress vil kjøre handleSubmit som vil lagre data i en NewCase. På denne måten har CasePage tilgjengelig på ny dataen som sendes inn.
   );
 } 
+
+const styles = StyleSheet.create ({
+    InputStyle: {
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: "black",
+        padding: 12
+    }
+})
