@@ -1,23 +1,6 @@
 import { File, Paths } from "expo-file-system";
 
-export type Role = "tenant" | "landlord";
-export type CaseStatus = "open" | "in progress" | "pending tenant confirmation" | "closed";
-export type CaseCategory = "water" | "electricity" | "heating" | "complaint" | "other";
-export type Severity = "low" | "medium" | "high";
-
-export type User = { id: string; name: string; role: Role };
-export type Property = { id: string; address: string; landlordId: string };
-export type Case = {
-  id: string;
-  title: string;
-  description: string;
-  status: CaseStatus;
-  category: CaseCategory;
-  severity: Severity;
-  tenantId: string;
-  propertyId: string;
-  createdAt: string;
-};
+import type { Case, NewCase, Property, User } from "@/constants/types";
 
 type Db = { users: User[]; properties: Property[]; cases: Case[] };
 
@@ -106,7 +89,7 @@ export async function getCase(id: string) {
   return (await load()).cases.find((c) => c.id === id);
 }
 
-export async function createCase(input: Omit<Case, "id" | "status" | "createdAt">) {
+export async function createCase(input: NewCase) {
   const db = await load();
   const newCase: Case = {
     ...input,
