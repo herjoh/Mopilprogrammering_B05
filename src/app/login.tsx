@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
+import AlretMessage from "../components/ui/AlertMessage";
+
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -27,6 +29,9 @@ export default function Login() {
                 onChangeText={setPassword}
                 secureTextEntry 
             />
+
+            <AlretMessage message ={Error} />
+
             <Pressable style={styles.button}>
                 <Text style= {styles.buttonText}>Logg inn</Text>
             </Pressable>

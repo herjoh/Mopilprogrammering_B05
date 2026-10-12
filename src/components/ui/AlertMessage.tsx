@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 type AlretMessageProps = {
     message: string;
@@ -27,7 +27,7 @@ const styles = StyleSheet.create ({
     },
 
     message: {
-        color: "#cc0000"
+        color: "#cc0000",
         fontSize: 14,
     },
 });
