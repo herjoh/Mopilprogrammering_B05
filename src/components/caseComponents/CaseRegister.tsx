@@ -6,19 +6,28 @@
 // Skjemaet skal ha like props som CaseItem, men det skal ikke ha en id eller createdAt, da dette skal genereres automatisk. Her kan omit brukes. 
 // data-en skal lagres i en variabel, som for eksempel CaseData.
 
+import type { CaseCategory, CaseSeverity, NewCase } from '@/constants/types';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import type { CaseCategory, CaseSeverity } from "./CaseItem";
-import { CaseItemProps } from "./CaseItem";
 
 
 
-export type NewCase = Omit<CaseItemProps, "id" | "createdAt" | "status"> ; // Lagd en type for en ny Case
+
+// Lagd en type for en ny Case
 
 interface CaseRegisterProps {
     onSubmit: (newCase: NewCase) => void; // Interface for å ta med typen med en onSubmit
 }
+
+const initialCase: NewCase = {
+    title: '',
+    description: '',
+    category: 'complaint',
+    severity: 'low',
+    propertyId: '',
+    tenantId: ''
+    }
 
 
 
@@ -26,47 +35,35 @@ export function CaseRegister({onSubmit}: CaseRegisterProps) {
 
 // States med standardverdier
 // Å gjøre:  Lage et objekt for alle states.
-const [title, setTitle] = useState<string>(''); 
-const [description, setDescription] = useState<string>('');
-const [category, setCategory] = useState<CaseCategory>("complaint");
-const [severity, setSeverity] = useState<CaseSeverity>("low");
+
+const [CaseData, setCaseData] = useState<NewCase>(initialCase)
 
 // handleSubmit: Når en case blir trykket på, vil den lagre NewCase med propsene nedenfor
 
 const handleSubmit = () => { 
-    const newCase: NewCase = {
-        title,
-        description,
-        category,
-        severity
-    };
+    onSubmit(CaseData)
+    setCaseData(initialCase)   
     // Når en case har blitt sendt inn så resetes standard verdiene igjen
-    onSubmit(newCase);
-    setTitle(''); 
-    setDescription('');
-    setCategory("complaint");
-    setSeverity("low");
-};
-
+}
   return (
     <View>
         <TextInput style={styles.InputStyle} // Textinput er react-native sin type form
-        value={title}
+        value={CaseData.title}
         placeholder="Ovnen funker ikke..."      
-        onChangeText={setTitle}                       
+        onChangeText={(text) => setCaseData({...CaseData, title: text})}                
         maxLength={30}                     
         />
         <TextInput style={styles.InputStyle}
-        value={description}
+        value={CaseData.description}
         placeholder="Ovnen funker ikke, og jeg har prøvd å skru den av og på igjen..."      
-        onChangeText={setDescription}                       
+          onChangeText={(text) => setCaseData({ ...CaseData, description: text })}                     
         maxLength={200}                     
         />
         <Text>Velg en kategori:</Text>
 
         <Picker //Picker: Picker er react-native sin mulighet for dropdown meny 
-            selectedValue={category}
-            onValueChange={setCategory}
+            selectedValue={CaseData.category}
+            onValueChange={(value) => setCaseData({...CaseData, category: value as CaseCategory})}
         >
             <Picker.Item label="vann" value="water" />
             <Picker.Item label="Elektrisitet" value="electricity" />
@@ -76,8 +73,8 @@ const handleSubmit = () => {
         </Picker>
         <Text>Velg alvorlighetsgrad:</Text>
         <Picker   
-            selectedValue={severity}
-            onValueChange={setSeverity}>
+            selectedValue={CaseData.severity}
+            onValueChange={(value) => setCaseData({...CaseData, severity: value as CaseSeverity})}>
             
             <Picker.Item label="lav" value="low" />
             <Picker.Item label="middels" value="medium" />
