@@ -25,6 +25,7 @@ export const UserSchema= z.object({
     .max(9999999, "Id must be atleast be 9999999")
     .transform((val) => {return Number(val)}),
   name: z.string().min(1, "Name is requiered"),
+  role: z.enum(["tenant", "landlord", "ADMIN"]),
   expireAat:z.string(),
   isActive: z.boolean()
 });
@@ -33,6 +34,7 @@ export const UserSchema= z.object({
 export const ProfileSchema = z.object({
   name: z.string().min(6, {message: "Name is required"}),
   email: z.string().min(6,{message: "Email is Expected"}),
+  role: z.enum(["tenant", "landlord"])
 })
 
 
@@ -50,7 +52,7 @@ export type NewCase = Omit<Case, "id" | "status" | "createdAt">;
 export type ProfileUser = z.infer<typeof UserSchema>
 export type Profile = z.infer<typeof ProfileSchema>
 
-export type Role = "tenant" | "landlord";
+export type Role = "tenant" | "landlord" | "ADMIN";
 export type CaseStatus = "open" | "in progress" | "pending tenant confirmation" | "closed";
 export type CaseCategory = "water" | "electricity" | "heating" | "complaint" | "other";
 export type CaseSeverity = "low" | "medium" | "high" | "urgent";

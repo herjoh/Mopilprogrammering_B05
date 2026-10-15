@@ -86,7 +86,10 @@ export async function getUserWithRole(id:string): Promise<Result<{user: User; ro
   return{success: true, data: {user, role: user.role} };
 }
 
-
+export async function getUserResult(id: string): Promise<Result<User>>{
+  const user = await getUser(id);
+  return user ? {success: true, data: user} : {success: false, error: "User id not found"};
+}
 
 export async function getProperties() {
   return (await load()).properties;

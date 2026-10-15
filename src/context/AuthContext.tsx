@@ -1,69 +1,42 @@
-import { User, ROLES } from "@/constants/types";
-import { createContext, use, useCallback, useEffect, useState } from "react";
-import { getUser, getUsers } from "@/data/fakeDb";
+import type { User } from "@/constants/types";
+import { getUserResult } from "@/data/fakeDb";
+import { createContext, use, useEffect, useState } from "react";
 
 
 type AuthContextSchema = {
     user: User | null,
     isLoading: boolean,
-    login: (email: string, password: string) => Promise<void>;
-    register: (email: string, password: string, admin: boolean) => Promise<void>;
-    logout: () => Promise<void>
-    isAdmin: boolean;
-    isLoggedIn: boolean;
-    isLoaded: boolean;
+    switchUser: (id: string) => void;
 }
 
-const AuthContext = createContext<AuthContextSchema>({
-  user: null,
-  isLoading: true,
-  login: async () => {},
-  register: async () => {},
-  logout: async () => {},
-  isAdmin: false,
-  isLoggedIn: false,
-  isLoaded: false,
-});
+const AuthContext = createContext<AuthContextSchema | null>(null);
 
 //main component
-export default function AuthProvider({children,}: {children : React.ReactNode}){
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [isLoaded, setIsLoaded] = useState(true);
+export default function AuthProvider({children}: {children : React.ReactNode}){
+    const [userId, setUserId] = useState<string>("u1");
+    const [user, setUser] = useState<User | null>(null)
+    const [isLoading, setIsLoading] = useState(true);
 
-    //helper to reset the laoding flags
-    const resetLoading = useCallback(() =>{
-        setLoading(false); setIsLoaded(true)}, []);
-    const setLoadingState = useCallback(() =>{
-        setLoading(true); setIsLoaded(false)}, []);
-    
-    
+
     useEffect(() => {
-        const fetchUserData = async () =>{
-            setLoading(true);
-            const result = await getUsers();
-            setUser
-        }
-    })
+      let cancelled = false;
+      setIsLoading (true);
+      getUserResult(userId)
+        .then((result) => {
+          if(!cancelled) setUser(result.success ? result.data : null);
+        })
+        .finally(() => {
+          if(!cancelled) setIsLoading(false);
+        })
+        return () =>{ cancelled = true}; 
+    }, [userId]);
 
 
    return(
-    <AuthContext.Provider
-     value={{
-        user,
-        isLoading: loading,
-        isAdmin: !!(user?.role === ROLES.ADMIN),
-        isLoaded,
-        isLoggedIn: !!(user !== null),
-     
-      }}
-    >
+    <AuthContext.Provider value={{user,isLoading,switchUser: setUserId}}>
       {children}
     </AuthContext.Provider>
   );
-}
-
-
 }
 
 
