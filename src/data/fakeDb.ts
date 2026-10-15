@@ -1,12 +1,8 @@
-import { File, Paths } from "expo-file-system";
+import { readText, writeText } from "./storage";
 
 import type { Case, NewCase, Property, User } from "@/constants/types";
 
 type Db = { users: User[]; properties: Property[]; cases: Case[] };
-
-function dbFile() {
-  return new File(Paths.document, "fakeDb.json");
-}
 
 function seed(): Db {
   return {
@@ -54,15 +50,15 @@ function seed(): Db {
 }
 
 function save(db: Db) {
-  const file = dbFile();
-  if (!file.exists) file.create();
-  file.write(JSON.stringify(db, null, 2));
+  writeText(JSON.stringify(db, null, 2));
 }
 
 async function load(): Promise<Db> {
-  const file = dbFile();
-  if (!file.exists) save(seed());
-  return JSON.parse(await file.text());
+  const text = await readText();
+  if (text !== undefined) return JSON.parse(text);
+  const db = seed();
+  save(db);
+  return db;
 }
 
 export async function getUsers() {
