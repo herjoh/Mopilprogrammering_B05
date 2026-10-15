@@ -1,9 +1,6 @@
 // felles typer for hele appen (MOB-19)
 import { z } from "zod";
 
-
-
-
 export type Case = {
   id: string;
   title: string;
@@ -15,6 +12,7 @@ export type Case = {
   propertyId: string;
   createdAt: string;
 };
+
 export const UserSchema= z.object({
   id: z.coerce.number()
     .int("ID must be a whole number(1)")

@@ -1,5 +1,6 @@
 import { User, ROLES } from "@/constants/types";
 import { createContext, use, useCallback, useEffect, useState } from "react";
+import { getUser, getUsers } from "@/data/fakeDb";
 
 
 type AuthContextSchema = {
@@ -40,6 +41,8 @@ export default function AuthProvider({children,}: {children : React.ReactNode}){
     useEffect(() => {
         const fetchUserData = async () =>{
             setLoading(true);
+            const result = await getUsers();
+            setUser
         }
     })
 
