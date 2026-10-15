@@ -1,6 +1,7 @@
 import { File, Paths } from "expo-file-system";
 
-import type { Case, NewCase, Property, User } from "@/constants/types";
+import { type Case, type NewCase, type Property, type Role, type User } from "@/constants/types";
+import { Result } from "@/providers/resultTypes";
 
 type Db = { users: User[]; properties: Property[]; cases: Case[] };
 
@@ -72,6 +73,20 @@ export async function getUsers() {
 export async function getUser(id: string) {
   return (await load()).users.find((u) => u.id === id);
 }
+
+export async function getUserRole(id: string): Promise<Result<Role>>{
+  const user = await getUser(id);
+  if(!user) return {success: false, error: "Error"};
+  return{success: true, data: user.role}
+}
+
+export async function getUserWithRole(id:string): Promise<Result<{user: User; role: Role}>> {
+  const user = await getUser(id);
+  if(!user) return{success: false, error: "User with id not found"};
+  return{success: true, data: {user, role: user.role} };
+}
+
+
 
 export async function getProperties() {
   return (await load()).properties;
