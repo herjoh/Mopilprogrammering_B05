@@ -1,16 +1,28 @@
+import { useAuth } from "@/context/AuthContext";
 import { Link } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 
 
 export default function Index() {
+    const {user} = useAuth();
+  
   return(
     <View style={styles.container}>
-      <Text style={styles.title}>Header</Text>
-      <Text style={styles.subtitle}>Welcome!</Text>
+      <Text style={styles.title}>Fiksa!!!</Text>
+      <Text style={styles.subtitle}>Fiksa dit problem!</Text>
 
       <View style={styles.linkContainer}>
-        <Link href="/login" style={styles.link}>My Profile</Link>
+        <Link href="/login" style={styles.link}>Login</Link>
       </View>
+      <View style={styles.linkContainer}>
+        <Link href="/about" style={styles.link}>About</Link>
+      </View>
+       <View style={styles.linkContainer}>
+        <Link href="/tenantHome" style={styles.link}>Tenant Home</Link>
+      </View>
+
+
+
 
 
 

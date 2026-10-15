@@ -9,10 +9,9 @@ function RootNavigator() {
   return(
       <Stack screenOptions={{headerTintColor: "#7b54e6"}}>
         <Stack.Screen name="index" options={{title: "Fiksa"}} />
-        <Stack.Screen name="about" options={{title: "About US"}} /> //Page dosent curently eixst
+        <Stack.Screen name="about" options={{title: "About US"}} /> 
         <Stack.Screen name="login" options={{title: "Login"}}/>
-            //Landlord home
-        <Stack.Screen name="register" options={{title: "Login"}}/>
+        <Stack.Screen name="register" options={{title: "Register"}}/>
         <Stack.Protected guard={user?.role ==="landlord"}>
           <Stack.Screen name="landlordHome" options={{headerTitle: "Landlord Dashboard"}}/>
         </Stack.Protected>
