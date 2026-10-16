@@ -17,7 +17,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 // Lagd en type for en ny Case
 
 interface CaseRegisterProps {
-    onSubmit: (newCase: NewCase) => void; // Interface for å ta med typen med en onSubmit
+    onSubmit: (newCase: NewCase) => Promise<void>; // Interface for å ta med typen med en onSubmit
 }
 
 const initialCase: NewCase = {
@@ -38,11 +38,27 @@ export function CaseRegister({onSubmit}: CaseRegisterProps) {
 
 const [CaseData, setCaseData] = useState<NewCase>(initialCase)
 
+const [error, setError] = useState<string | null>(null);
 // handleSubmit: Når en case blir trykket på, vil den lagre NewCase med propsene nedenfor
 
-const handleSubmit = () => { 
-    onSubmit(CaseData)
-    setCaseData(initialCase)   
+const handleSubmit = async () => { 
+    if (CaseData.title.trim() === "") {
+        setError("Tittel kan ikke være tom");
+        return;   
+    }
+
+    if(CaseData.description.trim() === "") {
+        setError("Beskrivelse kan ikke være tom")
+        return;
+    }
+    try {
+    await onSubmit(CaseData)
+    setCaseData(initialCase) 
+    setError(null) 
+    }
+    catch (e) {
+        setError("kunne ikke lagre saken, Prøv igjen!")
+    } 
     // Når en case har blitt sendt inn så resetes standard verdiene igjen
 }
   return (
@@ -82,6 +98,7 @@ const handleSubmit = () => {
             <Picker.Item label="akutt" value="urgent" />
 
         </Picker>
+        {error && <Text>{error}</Text>}
         <Pressable onPress={() => handleSubmit()}>
             <Text>Send inn</Text>
         </Pressable> 

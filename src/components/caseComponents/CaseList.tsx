@@ -19,6 +19,7 @@ export function CaseList({ role, cases }: CaseListProps) {
         keyExtractor={(item) => item.id} 
         renderItem={({ item}) => <CaseItem {...item} />}
         />  
+        
     )
 }
 

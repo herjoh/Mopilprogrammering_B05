@@ -22,8 +22,13 @@ export function CasePage() {
       tenantId: "t1",     // midlertidig
       propertyId: "p1",   // midlertidig
     });
-    await loadCases(); // oppdaterer listen
+    await loadCases(); 
+  
+  
+  
+  
   };
+
         
     
     // Bruk av CaseLayout, gjør det enklere å struktuere innhold med children. CaseRegister og CaseList er da satt som children.
