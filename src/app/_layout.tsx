@@ -1,10 +1,19 @@
 import AuthProvider, { useAuth } from "@/context/AuthContext";
-import { Stack } from "expo-router";
+import { Stack, useRouter, useSegments } from "expo-router";
+import { useEffect } from "react";
 
 
 function RootNavigator() {
   const {user, isLoading} = useAuth();
+  const router = useRouter();
+  const segments = useSegments();
   if (isLoading) return null;
+
+  useEffect(()=> {
+    if(!isLoading) return;
+    const authRoutes = ["(admin)", "(landlord)", "(tenant)"].includes(segments[0]);
+
+  })
   
   return(
       <Stack screenOptions={{headerTintColor: "#7b54e6"}}>
