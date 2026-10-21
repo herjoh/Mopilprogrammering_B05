@@ -13,7 +13,7 @@ const AuthContext = createContext<AuthContextSchema | null>(null);
 
 //main component
 export default function AuthProvider({children}: {children : React.ReactNode}){
-    const [userId, setUserId] = useState<string>("u1");
+    const [userId, setUserId] = useState<string>("u2");
     const [user, setUser] = useState<User | null>(null)
     const [isLoading, setIsLoading] = useState(true);
 
