@@ -1,12 +1,5 @@
 // felles typer for hele appen (MOB-19)
-
-export type Role = "tenant" | "landlord";
-export type CaseStatus = "open" | "in progress" | "pending tenant confirmation" | "closed";
-export type CaseCategory = "water" | "electricity" | "heating" | "complaint" | "other";
-export type CaseSeverity = "low" | "medium" | "high" | "urgent";
-
-export type User = { id: string; name: string; role: Role };
-export type Property = { id: string; address: string; landlordId: string };
+import { z } from "zod";
 
 export type Case = {
   id: string;
@@ -20,5 +13,49 @@ export type Case = {
   createdAt: string;
 };
 
+export const UserSchema= z.object({
+  id: z.coerce.number()
+    .int("ID must be a whole number(1)")
+    .min(10000,"Id must be at least 100000")
+    .max(9999999, "Id must be atleast be 9999999")
+    .transform((val) => {return Number(val)}),
+  tenantId: z.coerce.number()
+    .int("ID must be a whole number(1)")
+    .min(10000,"Id must be at least 100000")
+    .max(9999999, "Id must be atleast be 9999999")
+    .transform((val) => {return Number(val)}),
+  name: z.string().min(1, "Name is requiered"),
+  role: z.enum(["tenant", "landlord", "ADMIN"]),
+  expireAat:z.string(),
+  isActive: z.boolean()
+});
+
+
+export const ProfileSchema = z.object({
+  name: z.string().min(6, {message: "Name is required"}),
+  email: z.string().min(6,{message: "Email is Expected"}),
+  role: z.enum(["tenant", "landlord"])
+})
+
+
+export const ROLES = {
+    Unauthenticated: "Unauthenticated",
+    Tenant : "Tenant",
+    landlord: "Landlord"
+} as const;
+export const AdminFlag ={
+  ADMIN: "ADMIN"
+} as const;
+
 // det et skjema sender inn; id, status og createdAt settes av databasen
 export type NewCase = Omit<Case, "id" | "status" | "createdAt">;
+export type ProfileUser = z.infer<typeof UserSchema>
+export type Profile = z.infer<typeof ProfileSchema>
+
+export type Role = "tenant" | "landlord" | "ADMIN";
+export type CaseStatus = "open" | "in progress" | "pending tenant confirmation" | "closed";
+export type CaseCategory = "water" | "electricity" | "heating" | "complaint" | "other";
+export type CaseSeverity = "low" | "medium" | "high" | "urgent";
+
+export type User = { id: string; name: string; role: Role };
+export type Property = { id: string; address: string; landlordId: string };
