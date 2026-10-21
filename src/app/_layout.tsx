@@ -1,19 +1,25 @@
 import AuthProvider, { useAuth } from "@/context/AuthContext";
-import { Stack, useRouter, useSegments } from "expo-router";
+import { SplashScreen, Stack, useRouter } from "expo-router";
 import { useEffect } from "react";
 
 
 function RootNavigator() {
-  const {user, isLoading} = useAuth();
+  const {user, isLoading, isLoaded, isLoggedIn} = useAuth();
+  const ROLE_ROUTES = {landlord: "/(landlord)", tenant: "/(tenant)", admin: "/(admin)"}
   const router = useRouter();
-  const segments = useSegments();
+  //const segments = useSegments();
   if (isLoading) return null;
 
-  useEffect(()=> {
-    if(!isLoading) return;
-    const authRoutes = ["(admin)", "(landlord)", "(tenant)"].includes(segments[0]);
+  //Guard to dont load empty space
+  useEffect(() => {
+    if(isLoaded ){SplashScreen.hideAsync();}
+  }, [isLoaded])
 
-  })
+  useEffect(()=> {
+    if(isLoading || !user?.role) return;
+    const path = ROLE_ROUTES[user.role as keyof typeof ROLE_ROUTES];
+    if(path) router.replace(path);
+  }, [isLoading, user?.role]);
   
   return(
       <Stack screenOptions={{headerTintColor: "#7b54e6"}}>
