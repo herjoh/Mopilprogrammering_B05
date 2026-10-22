@@ -19,6 +19,7 @@ jest.mock("expo-file-system", () => {
 
 import {
   createCase,
+  deleteCase,
   getCase,
   getCases,
   getProperties,
@@ -60,4 +61,31 @@ test("updateCase endrer status på en sak", async () => {
   const updated = await updateCase("1", { status: "closed" });
   expect(updated?.status).toBe("closed");
   expect((await getCase("1"))?.status).toBe("closed");
+});
+
+test("deleteCase fjerner en sak og gir den tilbake", async () => {
+  const deleted = await deleteCase("2");
+  expect(deleted?.title).toBe("Stikkontakt på soverommet virker ikke");
+  expect(await getCases()).toHaveLength(2);
+  expect(await getCase("2")).toBeUndefined();
+});
+
+test("deleteCase gir undefined for ukjent id", async () => {
+  expect(await deleteCase("finnes-ikke")).toBeUndefined();
+  expect(await getCases()).toHaveLength(3);
+});
+
+test("createCase etter deleteCase gir ny unik id", async () => {
+  await deleteCase("2");
+  const created = await createCase({
+    title: "Dørlås henger",
+    description: "Nøkkelen går tungt i låsen.",
+    category: "other",
+    severity: "low",
+    tenantId: "u1",
+    propertyId: "p1",
+  });
+  const ids = (await getCases()).map((c) => c.id);
+  expect(ids).toContain(created.id);
+  expect(new Set(ids).size).toBe(ids.length);
 });

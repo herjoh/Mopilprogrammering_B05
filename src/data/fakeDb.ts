@@ -63,3 +63,8 @@ export async function updateCase(id: string, changes: Partial<Omit<Case, "id">>)
   const result = await caseRepository.update(id, changes);
   return result.success ? result.data : undefined;
 }
+
+export async function deleteCase(id: string) {
+  const result = await caseRepository.remove(id);
+  return result.success ? result.data : undefined;
+}
