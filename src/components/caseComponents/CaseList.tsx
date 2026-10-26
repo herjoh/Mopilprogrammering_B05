@@ -13,7 +13,6 @@ interface CaseListProps {
 export function CaseList({ role, cases }: CaseListProps) {
     return (
         // Å gjøre: Basert på en role, henter vi listen relevant til den rollen.
-
         <FlatList 
         data={cases} 
         keyExtractor={(item) => item.id} 
