@@ -18,6 +18,9 @@ expo-env.d.ts
 *.key
 *.mobileprovision
 
+# falsk database skrevet av utviklingsserveren ved kjøring på web
+/data/fakeDb.json
+
 # Metro
 .metro-health-check*
 
