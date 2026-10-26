@@ -10,7 +10,7 @@ type AuthContextSchema = {
     login: (email: string, password: string) => Promise<void>,
     switchUser: (id: string) => void;
     isLoggedIn: boolean,
-    isLoaded: false,
+    isLoaded: boolean,
 }
 
 const AuthContext = createContext<AuthContextSchema>({
@@ -62,7 +62,7 @@ export default function AuthProvider({children}: {children : React.ReactNode}){
 
 
    return(
-    <AuthContext.Provider value={{user,isLoading: loading, role: !!(user?.role), isLoaded, isLoggedIn: !!(user !== null), login: logInUser,switchUser: setUserId}}>
+    <AuthContext.Provider value={{user,isLoading: loading, role: user?.role ?? ROLES.Unauthenticated, isLoaded, isLoggedIn: !!(user !== null), login: logInUser,switchUser: setUserId}}>
       {children}
     </AuthContext.Provider>
   );
