@@ -1,6 +1,5 @@
-import { CasePage } from "@/pages/CasePage";
-import { StyleSheet, Text, View } from "react-native";
 import { useAuth } from "@/context/AuthContext";
+import { CasePage } from "@/pages/CasePage";
 import { Link } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 
