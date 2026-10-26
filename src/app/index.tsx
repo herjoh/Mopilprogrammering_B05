@@ -1,3 +1,5 @@
+import { CasePage } from "@/pages/CasePage";
+import { StyleSheet, Text, View } from "react-native";
 import { useAuth } from "@/context/AuthContext";
 import { Link } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
@@ -8,6 +10,8 @@ export default function Index() {
   
   return(
     <View style={styles.container}>
+      <Text>Edit src/app/index.tsx to edit this screen.</Text>
+      <CasePage />
       <Text style={styles.title}>Fiksa!!!</Text>
       <Text style={styles.subtitle}>Fiksa dit problem!</Text>
 
