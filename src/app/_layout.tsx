@@ -5,21 +5,21 @@ import { useEffect } from "react";
 
 function RootNavigator() {
   const {user, isLoading, isLoaded, isLoggedIn} = useAuth();
-  const ROLE_ROUTES = {landlord: "/(landlord)", tenant: "/(tenant)", admin: "/(admin)"}
+  const ROLE_ROUTES = {landlord: "/landlordHome", tenant: "/tenantHome", admin: "/adminHome"} as const;
   const router = useRouter();
   //const segments = useSegments();
   if (isLoading) return null;
 
   //Guard to dont load empty space
   useEffect(() => {
-    if(isLoaded ){SplashScreen.hideAsync();}
-  }, [isLoaded])
+    if(isLoading ){SplashScreen.hideAsync();}
+  }, [isLoading])
 
   useEffect(()=> {
-    if(isLoading || !user?.role) return;
+    if(!isLoaded || !user?.role) return;
     const path = ROLE_ROUTES[user.role as keyof typeof ROLE_ROUTES];
     if(path) router.replace(path);
-  }, [isLoading, user?.role]);
+  }, [isLoaded, user?.role]);
   
   return(
       <Stack screenOptions={{headerTintColor: "#7b54e6"}}>
@@ -27,10 +27,10 @@ function RootNavigator() {
         <Stack.Screen name="about" options={{title: "About US"}} /> 
         <Stack.Screen name="login" options={{title: "Login"}}/>
         <Stack.Screen name="register" options={{title: "Register"}}/>
-        <Stack.Protected guard={user?.role ==="landlord"}>
+        <Stack.Protected guard={user?.role ==="Landlord"}>
           <Stack.Screen name="landlordHome" options={{headerTitle: "Landlord Dashboard"}}/>
         </Stack.Protected>
-        <Stack.Protected guard={user?.role ==="tenant"}>
+        <Stack.Protected guard={user?.role ==="Tenant"}>
           <Stack.Screen name="tenantHome" options={{headerTitle: "Tenant Home"}}/>
         </Stack.Protected>
       </Stack>
