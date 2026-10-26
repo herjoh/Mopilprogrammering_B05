@@ -20,12 +20,9 @@ export default function Index() {
        <View style={styles.linkContainer}>
         <Link href="/tenantHome" style={styles.link}>Tenant Home</Link>
       </View>
-
-
-
-
-
-
+      <View style={styles.linkContainer}>
+        <Link href="/landlordHome" style={styles.link}>Landlord Home</Link>
+      </View>
 
     </View>
 
