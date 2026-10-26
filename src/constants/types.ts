@@ -41,7 +41,7 @@ export const ProfileSchema = z.object({
 export const ROLES = {
     Unauthenticated: "Unauthenticated",
     Tenant : "Tenant",
-    landlord: "Landlord"
+    Landlord: "Landlord"
 } as const;
 export const AdminFlag ={
   ADMIN: "ADMIN"
@@ -52,7 +52,7 @@ export type NewCase = Omit<Case, "id" | "status" | "createdAt">;
 export type ProfileUser = z.infer<typeof UserSchema>
 export type Profile = z.infer<typeof ProfileSchema>
 
-export type Role = "tenant" | "landlord" | "ADMIN";
+export type Role = (typeof ROLES)[keyof typeof ROLES];
 export type CaseStatus = "open" | "in progress" | "pending tenant confirmation" | "closed";
 export type CaseCategory = "water" | "electricity" | "heating" | "complaint" | "other";
 export type CaseSeverity = "low" | "medium" | "high" | "urgent";

@@ -1,4 +1,4 @@
-import { type Role, type User } from "@/constants/types";
+import { Role, ROLES, type User } from "@/constants/types";
 import { getUserResult } from "@/data/fakeDb";
 import { createContext, use, useCallback, useEffect, useState } from "react";
 
@@ -16,7 +16,7 @@ type AuthContextSchema = {
 const AuthContext = createContext<AuthContextSchema>({
   user: null,
   isLoading : true,
-  role: roles,
+  role: ROLES.Unauthenticated,
   login: async () => {},
   switchUser: async () => {},
   isLoggedIn: false,
