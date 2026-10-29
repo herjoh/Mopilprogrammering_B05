@@ -1,4 +1,4 @@
-import { Failure, Result, Success } from "./resultTypes";
+import { Failure, Result, Success } from "../types/resultTypes";
 
 const responseHandler = <T>(response: T): Success<T> =>{
     console.log("Response handler:", response);

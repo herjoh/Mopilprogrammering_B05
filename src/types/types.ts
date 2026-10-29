@@ -39,7 +39,6 @@ export const ProfileSchema = z.object({
 
 
 export const ROLES = {
-    Unauthenticated: "Unauthenticated",
     Tenant : "Tenant",
     Landlord: "Landlord",
     Admin: "ADMIN",

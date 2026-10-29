@@ -1,4 +1,25 @@
 // services/auth.ts
+import { Result } from "@/types/resultTypes";
+import type { User } from "@/types/types";
+import { z } from "zod";
+
+export const loginSchema = z.object({
+    email: z.string().trim().email("Ugylding epost"),
+    password: z.string().min(8, "A minimum of 8 characters are requierd.")
+})
+
+export const registerSchema = loginSchema.extend({name: z.string().trim().min(2)});
+
+export type Session = {user: User};
+
+export interface AuthService{
+    restore(): Promise<Session | null>;
+    login({email: string, password: string}): Promise<Result<Session>>;
+    register(i: {email: string; password: string; name: string }) : Promise<Result<Session>>;
+    logout(): Promise<void>;
+    onChange(cb: (s: Session | null) => void):() => void;
+}
+
 
 export type LoginResult = 
     | { success: true }

@@ -1,5 +1,5 @@
 import { propertyRepository, type PropertyRepository } from "@/features/properties/property-repository";
-import { failure, type Result } from "@/providers/resultTypes";
+import { failure, type Result } from "@/types/resultTypes";
 import type { Case, User } from "@/types/types";
 
 import { caseRepository, type CaseRepository, type CaseUpdate } from "./case-repository";

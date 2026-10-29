@@ -1,5 +1,5 @@
 import { createId, jsonDb, type DbAccess } from "@/data/db";
-import { failure, success, type Result } from "@/providers/resultTypes";
+import { failure, success, type Result } from "@/types/resultTypes";
 import type { Role, User } from "@/types/types";
 
 export type UserInsert = Omit<User, "id">;

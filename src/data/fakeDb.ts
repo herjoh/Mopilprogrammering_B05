@@ -2,7 +2,7 @@
 import { caseRepository } from "@/features/cases/case-repository";
 import { propertyRepository } from "@/features/properties/property-repository";
 import { userRepository } from "@/features/users/user-repository";
-import type { Result } from "@/providers/resultTypes";
+import type { Result } from "@/types/resultTypes";
 import type { Case, NewCase, Role, User } from "@/types/types";
 
 export { resetDb } from "./db";

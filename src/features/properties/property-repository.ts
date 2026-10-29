@@ -1,5 +1,5 @@
 import { jsonDb, type DbAccess } from "@/data/db";
-import { failure, success, type Result } from "@/providers/resultTypes";
+import { failure, success, type Result } from "@/types/resultTypes";
 import type { Property } from "@/types/types";
 
 export type PropertyFilter = { landlordId?: string };

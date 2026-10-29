@@ -1,5 +1,5 @@
 import { createId, jsonDb, type DbAccess } from "@/data/db";
-import { failure, success, type Result } from "@/providers/resultTypes";
+import { failure, success, type Result } from "@/types/resultTypes";
 import type { Case, CaseCategory, CaseSeverity, CaseStatus } from "@/types/types";
 
 // bare lagring, ingen regler (de ligger i case-service)
