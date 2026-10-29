@@ -14,7 +14,7 @@ export type Session = {user: User};
 
 export interface AuthService{
     restore(): Promise<Session | null>;
-    login({email: string, password: string}): Promise<Result<Session>>;
+    login(i: { email: string; password: string }): Promise<Result<Session>>;
     register(i: {email: string; password: string; name: string }) : Promise<Result<Session>>;
     logout(): Promise<void>;
     onChange(cb: (s: Session | null) => void):() => void;

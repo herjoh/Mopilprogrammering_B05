@@ -5,10 +5,10 @@ import type { User } from "@/types/types";
 import { createCaseRepository } from "../case-repository";
 import { createCaseService, type CaseService } from "../case-service";
 
-const kari: User = { id: "u1", name: "Kari Leietaker", role: "tenant" };
-const ola: User = { id: "u2", name: "Ola Utleier", role: "landlord" };
-const per: User = { id: "u3", name: "Per Leietaker", role: "tenant" };
-const annenUtleier: User = { id: "u4", name: "Anne Utleier", role: "landlord" };
+const kari: User = { id: "u1", name: "Kari Leietaker", role: "Tenant" };
+const ola: User = { id: "u2", name: "Ola Utleier", role: "Landlord" };
+const per: User = { id: "u3", name: "Per Leietaker", role: "Tenant" };
+const annenUtleier: User = { id: "u4", name: "Anne Utleier", role: "Landlord" };
 const admin: User = { id: "u9", name: "Admin", role: "ADMIN" };
 
 const gyldig = {

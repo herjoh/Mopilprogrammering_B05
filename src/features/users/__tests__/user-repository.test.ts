@@ -13,7 +13,7 @@ beforeEach(() => {
 it("list gir alle brukere, eller bare én rolle", async () => {
   const alle = await repo.list();
   expect(alle.success && alle.data).toHaveLength(2);
-  const utleiere = await repo.list({ role: "landlord" });
+  const utleiere = await repo.list({ role: "Landlord" });
   expect(utleiere.success && utleiere.data.map((u) => u.id)).toEqual(["u2"]);
 });
 
@@ -24,7 +24,7 @@ it("get finner en bruker og gir 404 for ukjent", async () => {
 });
 
 it("create registrerer en bruker med ny id og lagrer", async () => {
-  const result = await repo.create({ name: "Per Leietaker", role: "tenant" });
+  const result = await repo.create({ name: "Per Leietaker", role: "Tenant" });
   expect(result.success).toBe(true);
   if (!result.success) return;
   expect(result.data.id).toBeTruthy();

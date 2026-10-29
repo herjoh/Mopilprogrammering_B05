@@ -1,12 +1,12 @@
 import { getUserResult } from "@/data/fakeDb";
-import { Role, ROLES, type User } from "@/types/types";
+import type { Role, User } from "@/types/types";
 import { createContext, use, useCallback, useEffect, useState } from "react";
 
 
 type AuthContextSchema = {
     user: User | null,
     isLoading: boolean,
-    role: Role,
+    role: Role | null,
     login: (email: string, password: string) => Promise<void>,
     switchUser: (id: string) => void;
     isLoggedIn: boolean,
@@ -16,7 +16,7 @@ type AuthContextSchema = {
 const AuthContext = createContext<AuthContextSchema>({
   user: null,
   isLoading : true,
-  role: ROLES.Unauthenticated,
+  role: null,
   login: async () => {},
   switchUser: async () => {},
   isLoggedIn: false,
@@ -42,7 +42,7 @@ export default function AuthProvider({children}: {children : React.ReactNode}){
 
     const logInUser = async(email: string, password: string) => {
       setLoadings();
-      const result = await call_to_get_user_with_role();
+      const result = await getUserResult(userId); // midlertidig til innlogging med e-post/passord finnes
       setUser(result.success ? result.data : null);
       resetLoading();
     }
@@ -62,7 +62,7 @@ export default function AuthProvider({children}: {children : React.ReactNode}){
 
 
    return(
-    <AuthContext.Provider value={{user,isLoading: loading, role: user?.role ?? ROLES.Unauthenticated, isLoaded, isLoggedIn: !!(user !== null), login: logInUser,switchUser: setUserId}}>
+    <AuthContext.Provider value={{user,isLoading: loading, role: user?.role ?? null, isLoaded, isLoggedIn: !!(user !== null), login: logInUser,switchUser: setUserId}}>
       {children}
     </AuthContext.Provider>
   );

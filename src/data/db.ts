@@ -14,8 +14,8 @@ export type DbAccess = {
 export function seed(): Db {
   return {
     users: [
-      { id: "u1", name: "Kari Leietaker", role: "tenant" },
-      { id: "u2", name: "Ola Utleier", role: "landlord" },
+      { id: "u1", name: "Kari Leietaker", role: "Tenant" },
+      { id: "u2", name: "Ola Utleier", role: "Landlord" },
     ],
     properties: [{ id: "p1", address: "Storgata 1, Halden", landlordId: "u2" }],
     cases: [
