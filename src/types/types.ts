@@ -25,7 +25,7 @@ export const UserSchema= z.object({
     .max(9999999, "Id must be atleast be 9999999")
     .transform((val) => {return Number(val)}),
   name: z.string().min(1, "Name is requiered"),
-  role: z.enum(["tenant", "landlord", "ADMIN"]),
+  role: z.enum(["Tenant", "Landlord", "ADMIN"]),
   expireAat:z.string(),
   isActive: z.boolean()
 });
@@ -34,7 +34,7 @@ export const UserSchema= z.object({
 export const ProfileSchema = z.object({
   name: z.string().min(6, {message: "Name is required"}),
   email: z.string().min(6,{message: "Email is Expected"}),
-  role: z.enum(["tenant", "landlord"])
+  role: z.enum(["Tenant", "Landlord"])
 })
 
 
