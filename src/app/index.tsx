@@ -1,11 +1,11 @@
 import { useAuth } from "@/context/AuthContext";
 import { CasePage } from "@/pages/CasePage";
 import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 
 export default function Index() {
-    const {user} = useAuth();
+    const {switchUser} = useAuth();
   
   return(
     <View style={styles.container}>
@@ -20,11 +20,15 @@ export default function Index() {
       <View style={styles.linkContainer}>
         <Link href="/about" style={styles.link}>About</Link>
       </View>
-       <View style={styles.linkContainer}>
-        <Link href="/tenantHome" style={styles.link}>Tenant Home</Link>
+      <View style={styles.linkContainer}>
+        <Pressable style={styles.link} onPress={() => switchUser("u1")}>
+          <Text style={styles.linkText}>Fortsett som Kari (leietaker)</Text>
+        </Pressable>
       </View>
       <View style={styles.linkContainer}>
-        <Link href="/landlordHome" style={styles.link}>Landlord Home</Link>
+        <Pressable style={styles.link} onPress={() => switchUser("u2")}>
+          <Text style={styles.linkText}>Fortsett som Ola (utleier)</Text>
+        </Pressable>
       </View>
 
     </View>
