@@ -4,8 +4,8 @@ import { useEffect } from "react";
 
 
 function RootNavigator() {
-  const {user, isLoading, isLoaded, isLoggedIn} = useAuth();
-  const ROLE_ROUTES = {landlord: "/landlordHome", tenant: "/tenantHome", admin: "/adminHome"} as const;
+  const {user, isLoading, isLoggedIn} = useAuth();
+  const ROLE_ROUTES = {Landlord: "/landlordHome", Tenant: "/tenantHome", ADMIN: "/adminHome"} as const;
   const router = useRouter();
   //const segments = useSegments();
 
@@ -15,10 +15,10 @@ function RootNavigator() {
   }, [isLoading])
 
   useEffect(()=> {
-    if(!isLoaded || !user?.role) return;
+    if(isLoading || !user?.role) return;
     const path = ROLE_ROUTES[user.role as keyof typeof ROLE_ROUTES];
     if(path) router.replace(path);
-  }, [isLoaded, user?.role]);
+  }, [isLoading, user?.role]);
   
   return(
       <Stack screenOptions={{headerTintColor: "#7b54e6"}}>
@@ -27,10 +27,13 @@ function RootNavigator() {
         <Stack.Screen name="login" options={{title: "Login"}}/>
         <Stack.Screen name="register" options={{title: "Register"}}/>
         <Stack.Protected guard={user?.role ==="Landlord"}>
-          <Stack.Screen name="landlordHome" options={{headerTitle: "Landlord Dashboard"}}/>
+          <Stack.Screen name="(landlord)" options={{headerShown: false}}/>
         </Stack.Protected>
         <Stack.Protected guard={user?.role ==="Tenant"}>
-          <Stack.Screen name="tenantHome" options={{headerTitle: "Tenant Home"}}/>
+          <Stack.Screen name="(tenant)" options={{headerShown: false}}/>
+        </Stack.Protected>
+        <Stack.Protected guard={user?.role ==="ADMIN"}>
+          <Stack.Screen name="(admin)/adminHome" options={{headerTitle: "Admin"}}/>
         </Stack.Protected>
       </Stack>
 
