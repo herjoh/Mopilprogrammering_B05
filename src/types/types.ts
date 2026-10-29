@@ -55,5 +55,5 @@ export type CaseStatus = "open" | "in progress" | "pending tenant confirmation" 
 export type CaseCategory = "water" | "electricity" | "heating" | "complaint" | "other";
 export type CaseSeverity = "low" | "medium" | "high" | "urgent";
 
-export type User = { id: string; name: string; role: Role };
+export type User = { id: string; name: string; email: string; password: string; role: Role };
 export type Property = { id: string; address: string; landlordId: string };

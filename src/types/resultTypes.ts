@@ -1,7 +1,7 @@
 // svaret fra alle repository- og service-funksjoner
 
-// 400 ugyldig input, 403 ikke lov, 404 finnes ikke, 500 lagringsfeil
-export type ErrorCode = 400 | 403 | 404 | 500;
+// 400 ugyldig input, 401 ikke logget inn, 403 ikke lov, 404 finnes ikke, 500 lagringsfeil
+export type ErrorCode = 400 | 401 | 403 | 404 | 500;
 
 export type Success<T> = {
   success: true;

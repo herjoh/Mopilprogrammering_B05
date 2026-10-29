@@ -24,7 +24,7 @@ it("get finner en bruker og gir 404 for ukjent", async () => {
 });
 
 it("create registrerer en bruker med ny id og lagrer", async () => {
-  const result = await repo.create({ name: "Per Leietaker", role: "Tenant" });
+  const result = await repo.create({ name: "Per Leietaker", email: "per@fiksa.no", password: "test1234", role: "Tenant" });
   expect(result.success).toBe(true);
   if (!result.success) return;
   expect(result.data.id).toBeTruthy();

@@ -8,6 +8,7 @@ export type UserFilter = { role?: Role };
 export interface UserRepository {
   list(filter?: UserFilter): Promise<Result<User[]>>;
   get(id: string): Promise<Result<User>>;
+  getByEmail(email: string): Promise<Result<User>>;
   create(data: UserInsert): Promise<Result<User>>;
 }
 
@@ -36,7 +37,18 @@ export function createUserRepository(db: DbAccess): UserRepository {
       }
     },
 
-    // registrering, e-post og passord kommer med auth
+    async getByEmail(email) {
+      try {
+        const data = await db.load();
+        const wanted = email.trim().toLowerCase();
+        const found = data.users.find((u) => u.email.toLowerCase() === wanted);
+        return found ? success(found) : failure("Brukeren finnes ikke", 404);
+      } catch (error) {
+        console.error(error);
+        return failure(STORAGE_ERROR, 500);
+      }
+    },
+
     async create(input) {
       try {
         const data = await db.load();

@@ -1,12 +1,12 @@
-import { useRouter } from "expo-router";
+import { useAuth } from "@/context/AuthContext";
+import { userService } from "@/features/users/user-service";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 import AlretMessage from "../components/ui/AlertMessage";
-import { loginUser } from "../services/auth";
 
 export default function Login() {
-  const router = useRouter();
+  const { switchUser } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,14 +19,14 @@ export default function Login() {
     setError("");
 
     try {
-      const result = await loginUser(email, password);
+      const result = await userService.login(email, password);
 
       if (!result.success) {
-        setError(result.message);
+        setError(result.error);
         return;
       }
 
-      router.replace("/");
+      switchUser(result.data.id);
     } catch {
       setError("Noe gikk galt. Prøv igjen.");
     } finally {

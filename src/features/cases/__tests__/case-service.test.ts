@@ -5,11 +5,11 @@ import type { User } from "@/types/types";
 import { createCaseRepository } from "../case-repository";
 import { createCaseService, type CaseService } from "../case-service";
 
-const kari: User = { id: "u1", name: "Kari Leietaker", role: "Tenant" };
-const ola: User = { id: "u2", name: "Ola Utleier", role: "Landlord" };
-const per: User = { id: "u3", name: "Per Leietaker", role: "Tenant" };
-const annenUtleier: User = { id: "u4", name: "Anne Utleier", role: "Landlord" };
-const admin: User = { id: "u9", name: "Admin", role: "ADMIN" };
+const kari: User = { id: "u1", name: "Kari Leietaker", email: "kari@fiksa.no", password: "test1234", role: "Tenant" };
+const ola: User = { id: "u2", name: "Ola Utleier", email: "ola@fiksa.no", password: "test1234", role: "Landlord" };
+const per: User = { id: "u3", name: "Per Leietaker", email: "per@fiksa.no", password: "test1234", role: "Tenant" };
+const annenUtleier: User = { id: "u4", name: "Anne Utleier", email: "anne@fiksa.no", password: "test1234", role: "Landlord" };
+const admin: User = { id: "u9", name: "Admin", email: "admin@fiksa.no", password: "test1234", role: "ADMIN" };
 
 const gyldig = {
   title: "Knust vindu",
