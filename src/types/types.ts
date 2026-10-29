@@ -41,11 +41,10 @@ export const ProfileSchema = z.object({
 export const ROLES = {
     Unauthenticated: "Unauthenticated",
     Tenant : "Tenant",
-    Landlord: "Landlord"
+    Landlord: "Landlord",
+    Admin: "ADMIN",
 } as const;
-export const AdminFlag ={
-  ADMIN: "ADMIN"
-} as const;
+
 
 // det et skjema sender inn; id, status og createdAt settes av databasen
 export type NewCase = Omit<Case, "id" | "status" | "createdAt">;

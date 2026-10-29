@@ -8,7 +8,6 @@ function RootNavigator() {
   const ROLE_ROUTES = {landlord: "/landlordHome", tenant: "/tenantHome", admin: "/adminHome"} as const;
   const router = useRouter();
   //const segments = useSegments();
-  if (isLoading) return null;
 
   //Guard to dont load empty space
   useEffect(() => {
