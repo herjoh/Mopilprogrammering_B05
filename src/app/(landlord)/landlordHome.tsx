@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import { CasePage } from "@/pages/CasePage";
 
 export default function LandlordHomeScreen() {
-  return (
-    <View>
-      <Text>Landlord HOme</Text>
-    </View>
-  );
+  return <CasePage />;
 }

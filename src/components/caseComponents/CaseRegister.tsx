@@ -57,7 +57,7 @@ const handleSubmit = async () => {
     setError(null) 
     }
     catch (e) {
-        setError("kunne ikke lagre saken, Prøv igjen!")
+        setError(e instanceof Error ? e.message : "kunne ikke lagre saken, Prøv igjen!")
     } 
     // Når en case har blitt sendt inn så resetes standard verdiene igjen
 }

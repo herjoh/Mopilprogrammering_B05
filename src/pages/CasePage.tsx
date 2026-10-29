@@ -1,43 +1,46 @@
 import { CaseLayout } from "@/components/caseComponents/CaseLayout";
 import { CaseList } from "@/components/caseComponents/CaseList";
 import { CaseRegister } from "@/components/caseComponents/CaseRegister";
-import { createCase, getCases } from "@/data/fakeDb";
+import { useAuth } from "@/context/AuthContext";
+import { caseService } from "@/features/cases/case-service";
 import type { Case, NewCase } from "@/types/types";
 import { useEffect, useState } from "react";
+import { Text } from "react-native";
 
 export function CasePage() {
+  const { user } = useAuth();
   const [cases, setCases] = useState<Case[]>([]); // Loader for hver eneste gang ny case kommer
+  const [error, setError] = useState<string | null>(null);
 
   const loadCases = async () => {
-    setCases(await getCases());
+    if (!user) return;
+    const result = await caseService.list(user);
+    setCases(result.success ? result.data : []);
+    setError(result.success ? null : result.error);
   };
 
   useEffect(() => {
     loadCases(); // konstant som henter cases
-  }, []);
+  }, [user?.id]);
 
   const handleSubmit = async (newCase: NewCase) => {
-    await createCase({
+    if (!user) throw new Error("Logg inn først");
+    const result = await caseService.create(user, {
       ...newCase,
-      tenantId: "t1",     // midlertidig
       propertyId: "p1",   // midlertidig
     });
-    await loadCases(); 
-  
-  
-  
-  
+    if (!result.success) throw new Error(result.error);
+    await loadCases();
   };
 
-        
-    
+  if (!user) return <Text>Logg inn for å se og melde inn saker</Text>;
+
     // Bruk av CaseLayout, gjør det enklere å struktuere innhold med children. CaseRegister og CaseList er da satt som children.
     return ( 
     <CaseLayout title="Legg til en sak?">
-      <CaseRegister onSubmit={handleSubmit} />
-      <CaseList role="Tenant" cases={cases} />
+      {error && <Text>{error}</Text>}
+      {user.role === "Tenant" && <CaseRegister onSubmit={handleSubmit} />}
+      <CaseList role={user.role} cases={cases} />
     </CaseLayout>
     )
 }
-
-
