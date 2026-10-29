@@ -27,7 +27,7 @@ export function CasePage() {
     if (!user) throw new Error("Logg inn først");
     const result = await caseService.create(user, {
       ...newCase,
-      propertyId: "p1",   // midlertidig
+      propertyId: user.propertyId,
     });
     if (!result.success) throw new Error(result.error);
     await loadCases();
