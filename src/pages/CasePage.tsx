@@ -3,7 +3,7 @@ import { CaseList } from "@/components/caseComponents/CaseList";
 import { CaseRegister } from "@/components/caseComponents/CaseRegister";
 import { useAuth } from "@/context/AuthContext";
 import { caseService } from "@/features/cases/case-service";
-import type { Case, NewCase } from "@/types/types";
+import type { Case, CaseStatus, NewCase } from "@/types/types";
 import { useEffect, useState } from "react";
 import { Text } from "react-native";
 
@@ -33,6 +33,13 @@ export function CasePage() {
     await loadCases();
   };
 
+  const handleStatusChange = async (id: string, status: CaseStatus) => {
+    if (!user) return;
+    const result = await caseService.update(user, id, { status });
+    setError(result.success ? null : result.error);
+    if (result.success) await loadCases();
+  };
+
   if (!user) return <Text>Logg inn for å se og melde inn saker</Text>;
 
     // Bruk av CaseLayout, gjør det enklere å struktuere innhold med children. CaseRegister og CaseList er da satt som children.
@@ -40,7 +47,7 @@ export function CasePage() {
     <CaseLayout title="Legg til en sak?">
       {error && <Text>{error}</Text>}
       {user.role === "Tenant" && <CaseRegister onSubmit={handleSubmit} />}
-      <CaseList role={user.role} cases={cases} />
+      <CaseList role={user.role} cases={cases} onStatusChange={user.role === "Landlord" ? handleStatusChange : undefined} />
     </CaseLayout>
     )
 }
