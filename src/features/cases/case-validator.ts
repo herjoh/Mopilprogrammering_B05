@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import type { CaseCategory, CaseSeverity, CaseStatus } from "@/constants/types";
+import type { CaseCategory, CaseSeverity, CaseStatus } from "@/types/types";
 import { validateDescription } from "@/utils/validation";
 
 // zod trenger listene, satisfies sjekker at de matcher typene i constants/types

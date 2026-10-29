@@ -1,4 +1,4 @@
-import type { Case } from "@/constants/types";
+import type { Case } from "@/types/types";
 import { StyleSheet, Text, View } from "react-native";
 
 export type CaseItemProps = Omit<Case, "tenantId" | "propertyId">;

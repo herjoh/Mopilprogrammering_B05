@@ -1,6 +1,6 @@
-import type { User } from "@/constants/types";
 import { createMemoryDb } from "@/data/db";
 import { createPropertyRepository } from "@/features/properties/property-repository";
+import type { User } from "@/types/types";
 
 import { createCaseRepository } from "../case-repository";
 import { createCaseService, type CaseService } from "../case-service";

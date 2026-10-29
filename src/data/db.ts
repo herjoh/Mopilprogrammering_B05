@@ -1,4 +1,4 @@
-import type { Case, Property, User } from "@/constants/types";
+import type { Case, Property, User } from "@/types/types";
 
 import { readText, writeText } from "./storage";
 

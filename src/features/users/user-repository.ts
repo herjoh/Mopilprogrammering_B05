@@ -1,6 +1,6 @@
-import type { Role, User } from "@/constants/types";
 import { createId, jsonDb, type DbAccess } from "@/data/db";
 import { failure, success, type Result } from "@/providers/resultTypes";
+import type { Role, User } from "@/types/types";
 
 export type UserInsert = Omit<User, "id">;
 export type UserFilter = { role?: Role };

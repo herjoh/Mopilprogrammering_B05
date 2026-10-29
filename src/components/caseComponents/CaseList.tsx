@@ -1,7 +1,7 @@
+import { Role } from "@/types/types";
 import { FlatList } from "react-native";
 import { CaseItem, CaseItemProps } from "./CaseItem";
 
-type Role = "tenant" | "landlord";
 
 interface CaseListProps {
     role: Role;

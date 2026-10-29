@@ -1,6 +1,6 @@
-import type { Case, User } from "@/constants/types";
 import { propertyRepository, type PropertyRepository } from "@/features/properties/property-repository";
 import { failure, type Result } from "@/providers/resultTypes";
+import type { Case, User } from "@/types/types";
 
 import { caseRepository, type CaseRepository, type CaseUpdate } from "./case-repository";
 import { createCaseSchema, fieldErrorsOf, updateCaseSchema } from "./case-validator";
@@ -24,7 +24,7 @@ const landlordFields: readonly string[] = ["status", "severity"];
 export function createCaseService(cases: CaseRepository, properties: PropertyRepository): CaseService {
   async function isParty(user: User, c: Case) {
     if (user.role === "ADMIN") return true;
-    if (user.role === "tenant") return c.tenantId === user.id;
+    if (user.role === "Tenant") return c.tenantId === user.id;
     const property = await properties.get(c.propertyId);
     return property.success && property.data.landlordId === user.id;
   }
@@ -38,15 +38,15 @@ export function createCaseService(cases: CaseRepository, properties: PropertyRep
 
   return {
     async list(user) {
-      if (user.role === "tenant") return cases.list({ tenantId: user.id });
-      if (user.role === "landlord") return cases.list({ landlordId: user.id });
+      if (user.role === "Tenant") return cases.list({ tenantId: user.id });
+      if (user.role === "Landlord") return cases.list({ landlordId: user.id });
       return cases.list();
     },
 
     get: getIfAllowed,
 
     async create(user, input) {
-      if (user.role !== "tenant") return failure("Bare leietakere kan melde inn saker", 403);
+      if (user.role !== "Tenant") return failure("Bare leietakere kan melde inn saker", 403);
       const parsed = createCaseSchema.safeParse(input);
       if (!parsed.success) return failure("Ugyldig data", 400, fieldErrorsOf(parsed.error));
       const property = await properties.get(parsed.data.propertyId);
@@ -63,10 +63,10 @@ export function createCaseService(cases: CaseRepository, properties: PropertyRep
       const changes = Object.fromEntries(Object.entries(parsed.data).filter(([, v]) => v !== undefined)) as CaseUpdate;
       const keys = Object.keys(changes);
       if (keys.length === 0) return failure("Ingenting å endre", 400);
-      if (user.role === "tenant" && keys.some((k) => !tenantFields.includes(k))) {
+      if (user.role === "Tenant" && keys.some((k) => !tenantFields.includes(k))) {
         return failure("Leietaker kan ikke endre status", 403);
       }
-      if (user.role === "landlord" && keys.some((k) => !landlordFields.includes(k))) {
+      if (user.role === "Landlord" && keys.some((k) => !landlordFields.includes(k))) {
         return failure("Utleier kan bare endre status og hastegrad", 403);
       }
       return cases.update(id, changes);
@@ -75,7 +75,7 @@ export function createCaseService(cases: CaseRepository, properties: PropertyRep
     async remove(user, id) {
       const existing = await getIfAllowed(user, id);
       if (!existing.success) return existing;
-      if (user.role === "tenant" && existing.data.status !== "open") {
+      if (user.role === "Tenant" && existing.data.status !== "open") {
         return failure("Saken er under behandling og kan ikke slettes", 403);
       }
       return cases.remove(id);

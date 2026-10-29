@@ -6,7 +6,7 @@
 // Skjemaet skal ha like props som CaseItem, men det skal ikke ha en id eller createdAt, da dette skal genereres automatisk. Her kan omit brukes. 
 // data-en skal lagres i en variabel, som for eksempel CaseData.
 
-import type { CaseCategory, CaseSeverity, NewCase } from '@/constants/types';
+import type { CaseCategory, CaseSeverity, NewCase } from '@/types/types';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';

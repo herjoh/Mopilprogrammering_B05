@@ -1,8 +1,8 @@
 import { CaseLayout } from "@/components/caseComponents/CaseLayout";
 import { CaseList } from "@/components/caseComponents/CaseList";
 import { CaseRegister } from "@/components/caseComponents/CaseRegister";
-import type { Case, NewCase } from "@/constants/types";
 import { createCase, getCases } from "@/data/fakeDb";
+import type { Case, NewCase } from "@/types/types";
 import { useEffect, useState } from "react";
 
 export function CasePage() {
@@ -35,7 +35,7 @@ export function CasePage() {
     return ( 
     <CaseLayout title="Legg til en sak?">
       <CaseRegister onSubmit={handleSubmit} />
-      <CaseList role="tenant" cases={cases} />
+      <CaseList role="Tenant" cases={cases} />
     </CaseLayout>
     )
 }

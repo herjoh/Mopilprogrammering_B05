@@ -1,5 +1,5 @@
-import { Role, ROLES, type User } from "@/constants/types";
 import { getUserResult } from "@/data/fakeDb";
+import { Role, ROLES, type User } from "@/types/types";
 import { createContext, use, useCallback, useEffect, useState } from "react";
 
 
