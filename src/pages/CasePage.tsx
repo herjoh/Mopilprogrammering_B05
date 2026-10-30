@@ -44,7 +44,7 @@ export function CasePage() {
 
     // Bruk av CaseLayout, gjør det enklere å struktuere innhold med children. CaseRegister og CaseList er da satt som children.
     return ( 
-    <CaseLayout title="Legg til en sak?">
+    <CaseLayout>
       {error && <Text>{error}</Text>}
       {user.role === "Tenant" && <CaseRegister onSubmit={handleSubmit} />}
       <CaseList role={user.role} cases={cases} onStatusChange={user.role === "Landlord" ? handleStatusChange : undefined} />
