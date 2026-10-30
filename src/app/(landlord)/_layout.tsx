@@ -7,7 +7,7 @@ export default function LandlordLayuout(){
     return(
         <Stack screenOptions={{headerRight: () => <Pressable onPress={() => switchUser("")}><Text style={{color: "#7b54e6", marginRight: 12}}>Logg ut</Text></Pressable>}}>
             <Stack.Screen name="landlordHome" options={{headerShown:true, headerTitle:"Landlord Dashboard"}}/>
-            <Stack.Screen name="user_Profile"/>
+            <Stack.Screen name="user_profile"/>
         </Stack>
     )
 }
