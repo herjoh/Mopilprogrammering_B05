@@ -1,7 +1,7 @@
 import { Theme, useTheme } from "@/components/ui/theme/themeProvider";
+import { useStyles } from "@/components/ui/theme/useStyles";
 import { useAuth } from "@/context/AuthContext";
 import { Link } from "expo-router";
-import { useMemo } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 const makeStyles = ({ colors, spacing, radii, fontSizes, shadows, screen }: Theme) =>
@@ -73,7 +73,7 @@ const makeStyles = ({ colors, spacing, radii, fontSizes, shadows, screen }: Them
 export default function Index() {
     const {switchUser} = useAuth();
     const theme = useTheme();  
-    const styles = useMemo(() => makeStyles(theme), [theme]);
+    const styles = useStyles(makeStyles);
   
   return(
     <ScrollView contentContainerStyle= {styles.scroll}>

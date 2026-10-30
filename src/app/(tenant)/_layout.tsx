@@ -5,6 +5,7 @@ import { Pressable, Text } from "react-native";
 
 export default function TenantLayuout(){
     const {switchUser} = useAuth();
+
     return(
         <Tabs
             screenOptions={{

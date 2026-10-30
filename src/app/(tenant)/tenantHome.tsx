@@ -1,49 +1,113 @@
+import { Theme, useTheme } from "@/components/ui/theme/themeProvider";
+import { useStyles } from "@/components/ui/theme/useStyles";
 import { CasePage } from "@/pages/CasePage";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function TenantHomeScreen() {
-  return(
-      <View style={styles.container}>
-        <Text style={styles.title}>Velkommen til Leietaker-appen</Text>
-        <Text style={styles.subtitle}>Her kan du melde inn saker og se status på dine saker.</Text>
-        <CasePage />
-      </View>
-
+  const {colors} = useTheme();  
+  const styles = useStyles(makeStyles);
   
+  return(
+    <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.title}>Velkommen til Leietaker-appen</Text>
+            <Text style={styles.subtitle}>Her kan du melde inn saker og se status på dine saker.</Text>
+          </View>
+
+      <CasePage />
+    </View>
+   
     );
 }
-const styles = StyleSheet.create({
+const makeStyles = ({ colors, spacing, radii, fontSizes, shadows, screen }: Theme) =>
+  StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "#f5f5f5",
-      padding: 20,
+      alignItems: "center",
+      padding: spacing.lg,
+      backgroundColor: colors.background,
+    },
+      form: {
+      width: "100%",
+      maxWidth: screen.isTablet ? 480 : 400,
+      backgroundColor: colors.surface,
+      borderRadius: radii.lg,
+      padding: spacing.lg,
+      ...shadows.card,
+    },
+    content: {
+      width: "100%",
+      maxWidth: screen.isTablet ? 560 : 420,   // responsive: wider card on tablets
+    },
+    header: {
+      alignItems: "center",
+      marginBottom: spacing.xl,
+    },
+     label: {
+      fontSize: fontSizes.sm,
+      fontWeight: "600",
+      color: colors.textMuted,
+      marginBottom: spacing.xs,
     },
     title: {
-      fontSize: 24,
+      fontSize: screen.isTablet ? fontSizes.xl + 12 : fontSizes.xl,
       fontWeight: "bold",
-      marginBottom: 10,
-      color: "#2321c4",
+      color: colors.primary,
     },
     subtitle: {
-      fontSize: 16,
-      marginBottom: 30,
-      color: "#333",
+      fontSize: screen.isTablet ? fontSizes.lg : fontSizes.md,
+      color: colors.textMuted,
+      marginTop: spacing.xs,
     },
-    linkContainer: {
-      width: "80%",
-      marginTop: 20,
+    card: {
+      backgroundColor: colors.surface,
+      borderRadius: radii.lg,
+      padding: spacing.lg,
+      gap: spacing.md,
+      ...shadows.card,
     },
-    link: {
-      backgroundColor: "#53095a",
-      padding: 15,
-      borderRadius: 8,
-      marginVertical: 10,
+    sectionLabel: {
+      fontSize: fontSizes.sm,
+      color: colors.textMuted,
+      textTransform: "uppercase",
+      letterSpacing: 1,
+    },
+    // Side by side on landscape tablets, stacked otherwise
+    row: {
+      flexDirection: screen.isTablet && screen.isLandscape ? "row" : "column",
+      gap: spacing.md,
+    },
+      input: {
+      backgroundColor: colors.background,
+      color: colors.text,
+      borderWidth: 1,
+      borderColor: colors.secondaryTint,
+      borderRadius: radii.md,
+      paddingVertical: spacing.sm + 2,
+      paddingHorizontal: spacing.md,
+      fontSize: fontSizes.md,
+      marginBottom: spacing.md,
+      },
+      
+    button: {
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.lg,
+      borderRadius: radii.md,
       alignItems: "center",
+      flex: screen.isTablet && screen.isLandscape ? 1 : undefined,
     },
-    linkText: {
-      color: "white",
-      fontWeight: "bold",
+    buttonPrimary: { backgroundColor: colors.primary },
+    buttonOutline: {
+      backgroundColor: "transparent",
+      borderWidth: 1.5,
+      borderColor: colors.primary,
     },
+    buttonDisabled: { opacity: 0.5 },
+    buttonPressed: { opacity: 0.8 },
+    buttonText: {
+      color: colors.surface,
+      fontSize: fontSizes.md,
+      fontWeight: "600",
+    }
   });
