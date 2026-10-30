@@ -23,6 +23,12 @@ it("get finner en bruker og gir 404 for ukjent", async () => {
   expect(await repo.get("u99")).toMatchObject({ success: false, code: 404 });
 });
 
+it("getByEmail finner uansett store/små bokstaver og gir 404 for ukjent", async () => {
+  const found = await repo.getByEmail("  KARI@fiksa.no ");
+  expect(found.success && found.data.id).toBe("u1");
+  expect(await repo.getByEmail("ingen@fiksa.no")).toMatchObject({ success: false, code: 404 });
+});
+
 it("create registrerer en bruker med ny id og lagrer", async () => {
   const result = await repo.create({ name: "Per Leietaker", email: "per@fiksa.no", password: "test1234", role: "Tenant" });
   expect(result.success).toBe(true);
