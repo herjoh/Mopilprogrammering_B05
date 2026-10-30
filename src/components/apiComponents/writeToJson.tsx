@@ -21,7 +21,7 @@ export function UserList() {
 
       
       try {
-        const file = new File(Paths.document, "users.json");
+        const file = new File(Paths.document, "fakeDb.json");
         if (!file.exists) file.create();
         file.write(JSON.stringify(all, null, 2));
         console.log("Lagret til", file.uri);
