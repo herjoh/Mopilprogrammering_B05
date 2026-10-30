@@ -13,14 +13,14 @@ export default function LandlordLayuout(){
                 tabBarInactiveTintColor: "#888",
                 headerRight: () => (
                     <Pressable onPress={() => switchUser("")}>
-                        <Text style={{ color: "#7b54e6", marginRight: 12 }}> logg ut</Text>
+                        <Text style={{ color: "#7b54e6", marginRight: 12 }}> Logg ut</Text>
                     </Pressable>
                 ),
             }}
         >
             <Tabs.Screen
                 name="landlordHome"
-                    options={{title: "Hjem", headerTitle: "LandLord Dashboard", tabBarIcon: ({ color, size }) => (
+                    options={{title: "Hjem", headerTitle: "Landlord Dashboard", tabBarIcon: ({ color, size }) => (
                         <SymbolView
                             name={{ ios: "house.fill", android: "home", web: "home"}}
                             tintColor={color}
@@ -33,7 +33,7 @@ export default function LandlordLayuout(){
                 name="user_profile"
                     options={{ title: "Profil", tabBarIcon: ({color, size})=> (
                         <SymbolView
-                            name={{ios: "house.fill", android: "home", web: "home"}}
+                            name={{ios: "person.fill", android: "person", web: "person"}}
                             tintColor={color}
                             size={size}
                         />
