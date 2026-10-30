@@ -13,7 +13,7 @@ export default function TenantLayuout(){
                 tabBarInactiveTintColor: "#888",
                 headerRight: () => (
                     <Pressable onPress={() => switchUser("")}>
-                        <Text style={{ color: "#7b54e6", marginRight: 12 }}> logg ut</Text>
+                        <Text style={{ color: "#7b54e6", marginRight: 12 }}> Logg ut</Text>
                     </Pressable>
                 ),
             }}
@@ -26,20 +26,6 @@ export default function TenantLayuout(){
                     tabBarIcon: ({ color, size}) => (
                         <SymbolView
                             name={{ ios: "house.fill", android: "home", web: "home"}}
-                            tintColor={color}
-                            size={size}
-                        />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="cases"
-                options={{
-                    title: "Saker",
-                    headerTitle: "Mine saker",
-                    tabBarIcon : ({color, size }) => (
-                        <SymbolView
-                            name={{ ios: "doc.text.fill", android: "description", web: "description"}}
                             tintColor={color}
                             size={size}
                         />
