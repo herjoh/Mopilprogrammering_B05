@@ -2,7 +2,7 @@ import React, { createContext, useContext, useMemo } from "react";
 import { useColorScheme, useWindowDimensions } from "react-native";
 import { breakpoints, fontSizes, palette, radii, shadows, spacing } from "./theme";
 
-
+ 
 const buildTheme = (scheme: "light" | "dark", width: number, height: number) => ({
   colors: palette[scheme],
   spacing,
