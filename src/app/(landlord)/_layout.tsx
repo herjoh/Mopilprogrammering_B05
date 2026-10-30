@@ -1,6 +1,7 @@
 import { useAuth } from "@/context/AuthContext";
-import { Pressable, Text } from "react-native";
 import { Tabs } from "expo-router";
+import { SymbolView } from "expo-symbols";
+import { Pressable, Text } from "react-native";
 
 export default function LandlordLayuout(){
     const {switchUser} = useAuth();
@@ -19,12 +20,26 @@ export default function LandlordLayuout(){
         >
             <Tabs.Screen
                 name="landlordHome"
-                options={{title: "Hjem", headerTitle: "LandLord Dashboard" }}
+                    options={{title: "Hjem", headerTitle: "LandLord Dashboard", tabBarIcon: ({ color, size }) => (
+                        <SymbolView
+                            name={{ ios: "house.fill", android: "home", web: "home"}}
+                            tintColor={color}
+                            size={size}
+                        />
+                    ),
+                }}
             />
             <Tabs.Screen
                 name="user_profile"
-                options={{ title: "Profil"}}
+                    options={{ title: "Profil", tabBarIcon: ({color, size})=> (
+                        <SymbolView
+                            name={{ios: "house.fill", android: "home", web: "home"}}
+                            tintColor={color}
+                            size={size}
+                        />
+                    ),
+                }}
             />
-            </Tabs>
+        </Tabs>
     );
 }
