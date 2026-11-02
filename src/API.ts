@@ -32,4 +32,3 @@ export async function API(): Promise<User[]> {
     }
     return []
 }
-

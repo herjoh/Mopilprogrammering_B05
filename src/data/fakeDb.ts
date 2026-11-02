@@ -5,7 +5,7 @@ import { userRepository } from "@/features/users/user-repository";
 import type { Result } from "@/types/resultTypes";
 import type { Case, NewCase, Role, User } from "@/types/types";
 
-export { resetDb } from "./db";
+export { resetDb, resetDbFromApi } from "./db";
 
 export async function getUsers() {
   const result = await userRepository.list();
