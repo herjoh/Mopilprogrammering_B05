@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo } from "react";
-import { useColorScheme, useWindowDimensions } from "react-native";
+import { Dimensions, useColorScheme, useWindowDimensions } from "react-native";
 import { breakpoints, fontSizes, palette, radii, shadows, spacing } from "./theme";
 
  
@@ -35,3 +35,5 @@ export function useTheme() {
   if (!ctx) throw new Error("useTheme must be used inside ThemeProvider");
   return ctx;
 }
+Dimensions.get("window");
+useWindowDimensions()
