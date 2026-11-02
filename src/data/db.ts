@@ -1,5 +1,5 @@
 import type { Case, Property, User } from "@/types/types";
-
+import { seedFromApi } from "./apiSeed";
 import { readText, writeText } from "./storage";
 
 // hele databasen er ett json-dokument, lagret via storage.ts / storage.web.ts
@@ -64,9 +64,13 @@ async function saveDb(db: Db) {
 async function loadDb(): Promise<Db> {
   const text = await readText();
   if (text !== undefined) return JSON.parse(text);
-  const db = seed();
+  const db = await seedFromApi(seed());
   await saveDb(db);
   return db;
+}
+
+export async function resetDbFromApi() {
+  await saveDb(await seedFromApi(seed()))
 }
 
 export const jsonDb: DbAccess = { load: loadDb, save: saveDb };

@@ -96,6 +96,10 @@ export default function Index() {
             </Pressable>
             </Link>
 
+          <View style={styles.linkContainer}>
+            <Link href="/Users" style={styles.link}>Se brukere</Link>
+          </View>
+
       <Text style={styles.sectionLabel}>Demo test innloging for leietaker & utleier</Text>
         <View style={styles.row}>
           <Pressable style={({ pressed }) => [styles.button, styles.buttonPrimary, pressed && styles.pressed,]}
