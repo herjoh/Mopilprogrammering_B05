@@ -36,4 +36,3 @@ export function useTheme() {
   return ctx;
 }
 Dimensions.get("window");
-useWindowDimensions()
