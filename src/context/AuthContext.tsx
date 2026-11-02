@@ -1,4 +1,5 @@
 import { getUserResult } from "@/data/fakeDb";
+import { clearSession, readSession, saveSession } from "@/data/session";
 import type { Role, User } from "@/types/types";
 import { createContext, use, useCallback, useEffect, useState } from "react";
 
@@ -25,7 +26,7 @@ const AuthContext = createContext<AuthContextSchema>({
 
 //main component
 export default function AuthProvider({children}: {children : React.ReactNode}){
-    const [userId, setUserId] = useState<string>("");
+    const [userId, setUserId] = useState<string | null>(null);
     const [user, setUser] = useState<User | null>(null)
     const [loading, setIsLoading] = useState(true);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -42,12 +43,23 @@ export default function AuthProvider({children}: {children : React.ReactNode}){
 
     const logInUser = async(email: string, password: string) => {
       setLoadings();
-      const result = await getUserResult(userId); // midlertidig til innlogging med e-post/passord finnes
+      const result = await getUserResult(userId ?? ""); // midlertidig til innlogging med e-post/passord finnes
       setUser(result.success ? result.data : null);
       resetLoading();
     }
 
+    const switchUser = useCallback((id: string) => {
+      setUserId(id);
+      if (id) saveSession(id);
+      else clearSession();
+    }, []);
+
     useEffect(() => {
+      readSession().then((stored) => setUserId(stored ?? ""));
+    }, []);
+
+    useEffect(() => {
+      if (userId === null) return;
       let cancelled = false;
       setIsLoading (true);
       getUserResult(userId)
@@ -62,7 +74,7 @@ export default function AuthProvider({children}: {children : React.ReactNode}){
 
 
    return(
-    <AuthContext.Provider value={{user,isLoading: loading, role: user?.role ?? null, isLoaded, isLoggedIn: !!(user !== null), login: logInUser,switchUser: setUserId}}>
+    <AuthContext.Provider value={{user,isLoading: loading, role: user?.role ?? null, isLoaded, isLoggedIn: !!(user !== null), login: logInUser,switchUser}}>
       {children}
     </AuthContext.Provider>
   );
