@@ -1,4 +1,4 @@
-import { Theme, useTheme } from "@/components/ui/theme/themeProvider";
+import { Theme } from "@/components/ui/theme/themeProvider";
 import { useStyles } from "@/components/ui/theme/useStyles";
 import { useAuth } from "@/context/AuthContext";
 import { Link } from "expo-router";
@@ -72,7 +72,6 @@ const makeStyles = ({ colors, spacing, radii, fontSizes, shadows, screen }: Them
 
 export default function Index() {
     const {switchUser} = useAuth();
-    const theme = useTheme();  
     const styles = useStyles(makeStyles);
   
   return(
@@ -83,22 +82,24 @@ export default function Index() {
            <Text style={styles.subtitle}>Fiksa dit problem!</Text>
         </View>
        
-        <View style={styles.card}>
-          <Link href="/login" asChild>
+        <View style={styles.card} >
+          <Link href="/login" asChild style={styles.card}>
             <Pressable style={({ pressed }) => [styles.button, styles.buttonPrimary, pressed && styles.pressed,]}>
               <Text style={[styles.buttonText, styles.textOnOutline]}>Login</Text>
             </Pressable>
             </Link>
 
-          <Link href="/about" asChild>
+          <Link href="/about" asChild style={styles.card}>
             <Pressable style={({ pressed }) => [styles.button, styles.buttonPrimary, pressed && styles.pressed,]}>
               <Text style={[styles.buttonText, styles.textOnOutline]}>About</Text>
             </Pressable>
             </Link>
 
-          <View style={styles.linkContainer}>
-            <Link href="/Users" style={styles.link}>Se brukere</Link>
-          </View>
+            <Link href="/Users" asChild style={styles.card}>
+                  <Pressable style={({ pressed }) => [styles.button, styles.buttonPrimary, pressed && styles.pressed,]}>
+                <Text style={[styles.buttonText, styles.textOnOutline]}>Users</Text>
+              </Pressable>
+            </Link>
 
       <Text style={styles.sectionLabel}>Demo test innloging for leietaker & utleier</Text>
         <View style={styles.row}>
