@@ -4,10 +4,10 @@ import { CasePage } from "@/pages/CasePage";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function LandlordHomeScreen() {
-    const styles = useStyles(makeStyles);
-
+  const styles = useStyles(makeStyles);
+  
   return(
-        <View style={styles.container}>
+      <View >
           <View style={styles.header}>
             <Text style={styles.title}>Velkommen til Eiendomsmanager-appe</Text>
             <Text style={styles.subtitle}>Her kan du se alle dine leietakere's saker.</Text>
@@ -20,20 +20,12 @@ export default function LandlordHomeScreen() {
 
 const makeStyles = ({ colors, spacing, radii, fontSizes, shadows, screen }: Theme) =>
   StyleSheet.create({
-    container: {
-      flex: 1,
+    scroll: {
+      flexGrow: 1,                 // lets content center when short, scroll when tall (landscape phones)
       justifyContent: "center",
       alignItems: "center",
       padding: spacing.lg,
       backgroundColor: colors.background,
-    },
-      form: {
-      width: "100%",
-      maxWidth: screen.isTablet ? 480 : 400,
-      backgroundColor: colors.surface,
-      borderRadius: radii.lg,
-      padding: spacing.lg,
-      ...shadows.card,
     },
     content: {
       width: "100%",
@@ -42,12 +34,6 @@ const makeStyles = ({ colors, spacing, radii, fontSizes, shadows, screen }: Them
     header: {
       alignItems: "center",
       marginBottom: spacing.xl,
-    },
-     label: {
-      fontSize: fontSizes.sm,
-      fontWeight: "600",
-      color: colors.textMuted,
-      marginBottom: spacing.xs,
     },
     title: {
       fontSize: screen.isTablet ? fontSizes.xl + 12 : fontSizes.xl,
@@ -77,18 +63,6 @@ const makeStyles = ({ colors, spacing, radii, fontSizes, shadows, screen }: Them
       flexDirection: screen.isTablet && screen.isLandscape ? "row" : "column",
       gap: spacing.md,
     },
-      input: {
-      backgroundColor: colors.background,
-      color: colors.text,
-      borderWidth: 1,
-      borderColor: colors.secondaryTint,
-      borderRadius: radii.md,
-      paddingVertical: spacing.sm + 2,
-      paddingHorizontal: spacing.md,
-      fontSize: fontSizes.md,
-      marginBottom: spacing.md,
-      },
-      
     button: {
       paddingVertical: spacing.md,
       paddingHorizontal: spacing.lg,
@@ -102,11 +76,10 @@ const makeStyles = ({ colors, spacing, radii, fontSizes, shadows, screen }: Them
       borderWidth: 1.5,
       borderColor: colors.primary,
     },
-    buttonDisabled: { opacity: 0.5 },
-    buttonPressed: { opacity: 0.8 },
-    buttonText: {
-      color: colors.surface,
-      fontSize: fontSizes.md,
-      fontWeight: "600",
-    }
+    buttonDemo: { backgroundColor: colors.contrast },
+    pressed: { opacity: 0.7 },
+    buttonText: { fontSize: fontSizes.md, fontWeight: "600" },
+    textOnPrimary: { color: colors.surface },
+    textOnOutline: { color: colors.primary },
+    textOnDemo: { color: "rgb(204, 21, 161)" },
   });
