@@ -6,11 +6,12 @@
 // Skjemaet skal ha like props som CaseItem, men det skal ikke ha en id eller createdAt, da dette skal genereres automatisk. Her kan omit brukes. 
 // data-en skal lagres i en variabel, som for eksempel CaseData.
 
+import { Theme, useTheme } from '@/components/ui/theme/themeProvider';
+import { useStyles } from '@/components/ui/theme/useStyles';
 import type { CaseCategory, CaseSeverity, NewCase } from '@/types/types';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-
 
 
 
@@ -32,6 +33,9 @@ const initialCase: NewCase = {
 
 
 export function CaseRegister({onSubmit}: CaseRegisterProps) {
+
+const { colors } = useTheme();
+const styles = useStyles(makeStyles);
 
 // States med standardverdier
 // Å gjøre:  Lage et objekt for alle states.
@@ -62,22 +66,24 @@ const handleSubmit = async () => {
     // Når en case har blitt sendt inn så resetes standard verdiene igjen
 }
   return (
-    <View>
-        <TextInput style={styles.InputStyle} // Textinput er react-native sin type form
+    <View style={styles.container}>
+        <Text style={styles.label}>Skriv inn Tittel</Text>
+        <TextInput style={styles.InputStyle} placeholderTextColor={colors.textMuted} // Textinput er react-native sin type form
         value={CaseData.title}
         placeholder="Ovnen funker ikke..."      
         onChangeText={(text) => setCaseData({...CaseData, title: text})}                
         maxLength={30}                     
         />
-        <TextInput style={styles.InputStyle}
+        <Text style={styles.label}>Skriv inn beskrivelse:</Text>
+        <TextInput style={styles.InputStyle} placeholderTextColor={colors.textMuted}
         value={CaseData.description}
         placeholder="Ovnen funker ikke, og jeg har prøvd å skru den av og på igjen..."      
           onChangeText={(text) => setCaseData({ ...CaseData, description: text })}                     
         maxLength={200}                     
         />
-        <Text>Velg en kategori:</Text>
+        <Text style={styles.label}>Velg en kategori:</Text>
 
-        <Picker //Picker: Picker er react-native sin mulighet for dropdown meny 
+        <Picker style={styles.picker}//Picker: Picker er react-native sin mulighet for dropdown meny 
             selectedValue={CaseData.category}
             onValueChange={(value) => setCaseData({...CaseData, category: value as CaseCategory})}
         >
@@ -87,8 +93,8 @@ const handleSubmit = async () => {
             <Picker.Item label="klage" value="complaint" />
             <Picker.Item label="annet" value="other" />
         </Picker>
-        <Text>Velg alvorlighetsgrad:</Text>
-        <Picker   
+        <Text style={styles.label}>Velg alvorlighetsgrad:</Text>
+        <Picker style={styles.picker} 
             selectedValue={CaseData.severity}
             onValueChange={(value) => setCaseData({...CaseData, severity: value as CaseSeverity})}>
             
@@ -98,19 +104,59 @@ const handleSubmit = async () => {
             <Picker.Item label="akutt" value="urgent" />
 
         </Picker>
-        {error && <Text>{error}</Text>}
-        <Pressable onPress={() => handleSubmit()}>
-            <Text>Send inn</Text>
+        {error && <Text style={styles.error}>{error}</Text>}
+        <Pressable style={styles.button} onPress={() => handleSubmit()}>
+            <Text style={styles.buttonText}>Send inn</Text>
         </Pressable> 
     </View> //Tilslutt, onPress vil kjøre handleSubmit som vil lagre data i en NewCase. På denne måten har CasePage tilgjengelig på ny dataen som sendes inn.
   );
 } 
 
-const styles = StyleSheet.create ({
+const makeStyles = ({ colors, spacing, radii, fontSizes }: Theme) => StyleSheet.create ({
+    container: {
+        backgroundColor: colors.surface,
+        padding: spacing.md,
+        borderRadius: radii.md,
+        marginBottom: spacing.md
+    },
     InputStyle: {
-        borderRadius: 10,
+        backgroundColor: colors.background,
+        borderRadius: radii.md,
         borderWidth: 1,
-        borderColor: "black",
-        padding: 12
+        borderColor: colors.secondaryTint,
+        color: colors.text,
+        padding: spacing.sm,
+        marginBottom: spacing.sm
+    },
+    label: {
+        fontSize: fontSizes.sm,
+        fontWeight: "600",
+        color: colors.textMuted
+    },
+    picker: {
+        backgroundColor: colors.background,
+        color: colors.text,
+        borderRadius: radii.md,
+        borderWidth: 1,
+        borderColor: colors.secondaryTint,
+        gap: spacing.sm,
+        marginBottom: spacing.sm,
+        fontSize: fontSizes.sm,
+    },
+    error: {
+        color: colors.danger,
+        marginBottom: spacing.sm
+    },
+    button: {
+        backgroundColor: colors.primary,
+        padding: spacing.md,
+        borderRadius: radii.md,
+        alignItems: "center",
+        marginBottom: spacing.md
+    },
+    buttonText: {
+        color: colors.surface,
+        fontSize: fontSizes.md,
+        fontWeight: "600"
     }
 })

@@ -1,3 +1,5 @@
+import { Theme } from '@/components/ui/theme/themeProvider';
+import { useStyles } from '@/components/ui/theme/useStyles';
 import { StyleSheet, Text, View } from 'react-native';
 
 interface CaseLayoutProps {
@@ -6,6 +8,7 @@ interface CaseLayoutProps {
 }
 
 export function CaseLayout({ title, children }: CaseLayoutProps) {
+    const styles = useStyles(makeStyles);
     return (
         <View style={styles.container}>
             {title && <Text style={styles.title}>{title}</Text>}
@@ -15,16 +18,17 @@ export function CaseLayout({ title, children }: CaseLayoutProps) {
 }
 // CaseLayout er tiltenkt som en wrapper for å enkelt style og sette CaseList og CaseItem inni.
 
-const styles = StyleSheet.create({
+const makeStyles = ({ colors, spacing, fontSizes }: Theme) => StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        padding: spacing.md,
     },
 
     title: {
-        fontSize: 24,
+        fontSize: fontSizes.lg,
         fontWeight: 'bold',
-        marginBottom: 16,
+        color: colors.primary,
+        marginBottom: spacing.md,
     }
 })
 // Enkel basis for styling
