@@ -8,7 +8,7 @@ export default function TenantHomeScreen() {
   const styles = useStyles(makeStyles);
   
   return(
-    <View  >
+    <View  style={{ flex: 1 }}>
           <View style={styles.header}>
             <Text style={styles.title}>Velkommen til Leietaker-appen</Text>
             <Text style={styles.subtitle}>Her kan du melde inn saker og se status på dine saker.</Text>

@@ -7,11 +7,12 @@ export default function LandlordHomeScreen() {
   const styles = useStyles(makeStyles);
   
   return(
-      <View >
+      <View style={{ flex: 1 }}>
           <View style={styles.header}>
             <Text style={styles.title}>Velkommen til Eiendomsmanager-appe</Text>
             <Text style={styles.subtitle}>Her kan du se alle dine leietakere's saker.</Text>
-          </View>
+          </View >
+
 
       <CasePage />
     </View>
