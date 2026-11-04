@@ -156,6 +156,6 @@ Testene ligger i `__tests__`-mapper ved siden av koden de tester.
 
 ## Lenker
 
-- Kurset i Canvas: https://hiof.instructure.com/courses/11085
+- Kurset i Canvas: https://hiof.instructure.com/courses/11080
 - Expo-dokumentasjon for SDK 58: https://docs.expo.dev/versions/v58.0.0/
 - Webappen: https://github.com/jowiu2766/Webapplikasjoner_B05
