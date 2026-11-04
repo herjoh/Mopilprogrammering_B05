@@ -1,11 +1,11 @@
 // de gamle funksjonene, beholdt så AuthContext og CasePage virker. nytt bruker features/
-import type { Case, NewCase, Role, User } from "@/constants/types";
 import { caseRepository } from "@/features/cases/case-repository";
 import { propertyRepository } from "@/features/properties/property-repository";
 import { userRepository } from "@/features/users/user-repository";
-import type { Result } from "@/providers/resultTypes";
+import type { Result } from "@/types/resultTypes";
+import type { Case, NewCase, Role, User } from "@/types/types";
 
-export { resetDb } from "./db";
+export { resetDb, resetDbFromApi } from "./db";
 
 export async function getUsers() {
   const result = await userRepository.list();

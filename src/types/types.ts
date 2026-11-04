@@ -25,7 +25,7 @@ export const UserSchema= z.object({
     .max(9999999, "Id must be atleast be 9999999")
     .transform((val) => {return Number(val)}),
   name: z.string().min(1, "Name is requiered"),
-  role: z.enum(["tenant", "landlord", "ADMIN"]),
+  role: z.enum(["Tenant", "Landlord", "ADMIN"]),
   expireAat:z.string(),
   isActive: z.boolean()
 });
@@ -34,28 +34,26 @@ export const UserSchema= z.object({
 export const ProfileSchema = z.object({
   name: z.string().min(6, {message: "Name is required"}),
   email: z.string().min(6,{message: "Email is Expected"}),
-  role: z.enum(["tenant", "landlord"])
+  role: z.enum(["Tenant", "Landlord"])
 })
 
 
 export const ROLES = {
-    Unauthenticated: "Unauthenticated",
     Tenant : "Tenant",
-    landlord: "Landlord"
+    Landlord: "Landlord",
+    Admin: "ADMIN",
 } as const;
-export const AdminFlag ={
-  ADMIN: "ADMIN"
-} as const;
+
 
 // det et skjema sender inn; id, status og createdAt settes av databasen
 export type NewCase = Omit<Case, "id" | "status" | "createdAt">;
 export type ProfileUser = z.infer<typeof UserSchema>
 export type Profile = z.infer<typeof ProfileSchema>
 
-export type Role = "tenant" | "landlord" | "ADMIN";
+export type Role = (typeof ROLES)[keyof typeof ROLES];
 export type CaseStatus = "open" | "in progress" | "pending tenant confirmation" | "closed";
 export type CaseCategory = "water" | "electricity" | "heating" | "complaint" | "other";
 export type CaseSeverity = "low" | "medium" | "high" | "urgent";
 
-export type User = { id: string; name: string; role: Role };
+export type User = { id: string; name: string; email: string; password: string; role: Role; propertyId?: string };
 export type Property = { id: string; address: string; landlordId: string };

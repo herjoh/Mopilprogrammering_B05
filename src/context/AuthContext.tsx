@@ -1,24 +1,65 @@
-import type { User } from "@/constants/types";
 import { getUserResult } from "@/data/fakeDb";
-import { createContext, use, useEffect, useState } from "react";
+import { clearSession, readSession, saveSession } from "@/data/session";
+import type { Role, User } from "@/types/types";
+import { createContext, use, useCallback, useEffect, useState } from "react";
 
 
 type AuthContextSchema = {
     user: User | null,
     isLoading: boolean,
+    role: Role | null,
+    login: (email: string, password: string) => Promise<void>,
     switchUser: (id: string) => void;
+    isLoggedIn: boolean,
+    isLoaded: boolean,
 }
 
-const AuthContext = createContext<AuthContextSchema | null>(null);
+const AuthContext = createContext<AuthContextSchema>({
+  user: null,
+  isLoading : true,
+  role: null,
+  login: async () => {},
+  switchUser: async () => {},
+  isLoggedIn: false,
+  isLoaded: false
+});
 
 //main component
 export default function AuthProvider({children}: {children : React.ReactNode}){
-    const [userId, setUserId] = useState<string>("u1");
+    const [userId, setUserId] = useState<string | null>(null);
     const [user, setUser] = useState<User | null>(null)
-    const [isLoading, setIsLoading] = useState(true);
+    const [loading, setIsLoading] = useState(true);
+    const [isLoaded, setIsLoaded] = useState(false);
 
+
+    //resetloading
+    const resetLoading = useCallback(() => {
+      setIsLoading(false); setIsLoaded(true);
+    },[]);
+    //setloading
+    const setLoadings = useCallback(() => {
+      setIsLoading(true); setIsLoaded(false);
+    }, []);
+
+    const logInUser = async(email: string, password: string) => {
+      setLoadings();
+      const result = await getUserResult(userId ?? ""); // midlertidig til innlogging med e-post/passord finnes
+      setUser(result.success ? result.data : null);
+      resetLoading();
+    }
+
+    const switchUser = useCallback((id: string) => {
+      setUserId(id);
+      if (id) saveSession(id);
+      else clearSession();
+    }, []);
 
     useEffect(() => {
+      readSession().then((stored) => setUserId(stored ?? ""));
+    }, []);
+
+    useEffect(() => {
+      if (userId === null) return;
       let cancelled = false;
       setIsLoading (true);
       getUserResult(userId)
@@ -33,7 +74,7 @@ export default function AuthProvider({children}: {children : React.ReactNode}){
 
 
    return(
-    <AuthContext.Provider value={{user,isLoading,switchUser: setUserId}}>
+    <AuthContext.Provider value={{user,isLoading: loading, role: user?.role ?? null, isLoaded, isLoggedIn: !!(user !== null), login: logInUser,switchUser}}>
       {children}
     </AuthContext.Provider>
   );

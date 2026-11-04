@@ -1,5 +1,5 @@
-import type { Case, Property, User } from "@/constants/types";
-
+import type { Case, Property, User } from "@/types/types";
+import { seedFromApi } from "./apiSeed";
 import { readText, writeText } from "./storage";
 
 // hele databasen er ett json-dokument, lagret via storage.ts / storage.web.ts
@@ -14,8 +14,8 @@ export type DbAccess = {
 export function seed(): Db {
   return {
     users: [
-      { id: "u1", name: "Kari Leietaker", role: "tenant" },
-      { id: "u2", name: "Ola Utleier", role: "landlord" },
+      { id: "u1", name: "Kari Leietaker", email: "kari@fiksa.no", password: "kari1234", role: "Tenant", propertyId: "p1" },
+      { id: "u2", name: "Ola Utleier", email: "ola@fiksa.no", password: "ola12345", role: "Landlord" },
     ],
     properties: [{ id: "p1", address: "Storgata 1, Halden", landlordId: "u2" }],
     cases: [
@@ -64,9 +64,13 @@ async function saveDb(db: Db) {
 async function loadDb(): Promise<Db> {
   const text = await readText();
   if (text !== undefined) return JSON.parse(text);
-  const db = seed();
+  const db = await seedFromApi(seed());
   await saveDb(db);
   return db;
+}
+
+export async function resetDbFromApi() {
+  await saveDb(await seedFromApi(seed()))
 }
 
 export const jsonDb: DbAccess = { load: loadDb, save: saveDb };

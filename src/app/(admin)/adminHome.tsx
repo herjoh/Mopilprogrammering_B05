@@ -1,9 +1,9 @@
 import { Text, View } from "react-native";
 
-export default function TenantHomeScreen() {
+export default function AdminHomeScreen() {
   return (
     <View>
-      <Text>Tenant Home</Text>
+      <Text>Admin HOme</Text>
     </View>
   );
 }

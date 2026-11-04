@@ -1,4 +1,4 @@
-import type { Profile } from "@/constants/types";
+import type { Profile } from "@/types/types";
 import { createContext, useContext, useState, type ReactNode } from "react";
 
 type ProfileContextType = {
