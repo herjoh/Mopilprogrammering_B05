@@ -3,7 +3,7 @@ import { useStyles } from "@/components/ui/theme/useStyles";
 import { useAuth } from "@/context/AuthContext";
 import { userService } from "@/features/users/user-service";
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 import AlretMessage from "../components/ui/AlertMessage";
 
@@ -39,7 +39,7 @@ export default function Login() {
   }
 
   return (
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
         <View style = {styles.header}>
           <Text style={styles.title}>Logg inn</Text>
         </View>
@@ -70,7 +70,7 @@ export default function Login() {
         <AlretMessage message={error} />
 
         <Pressable
-          style={[styles.button, loading && styles.buttonDisabled]}
+          style={[styles.button, styles.buttonPrimary, loading && styles.buttonDisabled]}
           onPress={handleLogin}
           disabled={loading}
         >
@@ -78,7 +78,7 @@ export default function Login() {
           {loading ? "Logger inn..." : "Logg inn"}
         </Text>
       </Pressable>
-    </View>
+    </ScrollView>
   );
 
         
@@ -87,7 +87,7 @@ export default function Login() {
 const makeStyles = ({ colors, spacing, radii, fontSizes, shadows, screen }: Theme) =>
   StyleSheet.create({
     container: {
-      flex: 1,
+      flexGrow: 1,
       justifyContent: "center",
       alignItems: "center",
       padding: spacing.lg,
@@ -160,7 +160,6 @@ const makeStyles = ({ colors, spacing, radii, fontSizes, shadows, screen }: Them
       paddingHorizontal: spacing.lg,
       borderRadius: radii.md,
       alignItems: "center",
-      flex: screen.isTablet && screen.isLandscape ? 1 : undefined,
     },
     buttonPrimary: { backgroundColor: colors.primary },
     buttonOutline: {
