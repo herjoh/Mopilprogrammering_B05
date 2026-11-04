@@ -72,8 +72,10 @@ export default function AboutScreen() {
    const theme = useTheme();  
     const styles = useStyles(makeStyles);
   return (
-    <View>
-      <Text>About</Text>
+      <View style={styles.content}>
+      
+          <View style={styles.header}><Text style={styles.textOnPrimary}>About</Text>
+        </View>
     </View>
   );
 }
